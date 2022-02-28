@@ -20,7 +20,7 @@ class PeepGame extends FlameGame with TapDetector {
     screenUnitY = canvasSize.y / 4;
     groundHeight = canvasSize.y - (screenUnitY * 1.2);
     jumpHeight = screenUnitY * 0.6;
-    print(screenUnitY);
+    print(groundHeight);
 
     final parallaxBackground = await loadParallaxComponent(
       [
@@ -54,6 +54,14 @@ class PeepGame extends FlameGame with TapDetector {
   }
 
   @override
+  void onGameResize(Vector2 canvasSize) {
+    super.onGameResize(canvasSize);
+    screenUnitX = canvasSize.x / 8;
+    screenUnitY = canvasSize.y / 4;
+    groundHeight = canvasSize.y - (screenUnitY * 1.2);
+  }
+
+  @override
   void update(double dt) {
     super.update(dt);
 
@@ -65,10 +73,12 @@ class PeepGame extends FlameGame with TapDetector {
   @override
   void onTap() {
     super.onTap();
-    peepAnimation.y = jumpHeight;
-   /* if(peepAnimation.y == groundHeight) {
-      peepAnimation.y -= jumpHeight;
-    }*/
+    //peepAnimation.y = jumpHeight;
+    //groundHeight = peepAnimation.y;
+    print(peepAnimation.y);
+    if(peepAnimation.y >= groundHeight) {
+      peepAnimation.y -= screenUnitY * 1.8;
+    }
   }
 
 }
