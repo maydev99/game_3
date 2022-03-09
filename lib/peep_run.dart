@@ -2,9 +2,12 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
+import 'package:layout/enemy_manager.dart';
+import 'package:layout/mr_peep.dart';
 
 class PeepGame extends FlameGame with TapDetector {
   SpriteAnimationComponent peepAnimation = SpriteAnimationComponent();
+  //SpriteAnimationComponent ballAnimation = SpriteAnimationComponent();
   double speed = 5.0;
   double speedY = 0.0;
   double yMax = 0.0;
@@ -13,9 +16,13 @@ class PeepGame extends FlameGame with TapDetector {
   double screenUnitX = 0.0;
   double screenUnitY = 0.0;
   double groundHeight = 0.0;
+  late EnemyManager _enemyManager;
+  late MrPeeps _mrPeeps;
 
   @override
   Future<void>? onLoad() async {
+    await images.load('rubber_ball.png');
+    await images.load('peeps3.png');
     screenUnitX = canvasSize.x / 8;
     screenUnitY = canvasSize.y / 4;
     groundHeight = canvasSize.y - (screenUnitY * 1.2);
@@ -33,7 +40,11 @@ class PeepGame extends FlameGame with TapDetector {
       velocityMultiplierDelta: Vector2(1.9, 0),
     );
 
-    var spriteSheet = await images.load('peeps3.png');
+    _mrPeeps = MrPeeps(images.fromCache('peeps3.png'));
+
+
+
+    /*var spriteSheet = await images.load('peeps3.png');
     final spriteSize = Vector2(screenUnitX, screenUnitY);
     SpriteAnimationData spriteAnimationData = SpriteAnimationData.sequenced(
         amount: 3, stepTime: 0.1, textureSize: Vector2(256, 256));
@@ -41,19 +52,35 @@ class PeepGame extends FlameGame with TapDetector {
     SpriteAnimationComponent.fromFrameData(spriteSheet, spriteAnimationData)
     ..x = canvasSize.x / 8
     ..y = groundHeight
-    ..size = spriteSize;
+    ..size = spriteSize;*/
+
+    _enemyManager = EnemyManager();
+
+
+
+    /*var ballSpriteSheet = await images.load('rubber_ball.png');
+    final ballSpriteSize = Vector2(screenUnitY / 2, screenUnitY / 2);
+    SpriteAnimationData ballSpriteAnimationData = SpriteAnimationData.sequenced(amount: 3, stepTime: 0.1, textureSize: Vector2(256, 256));
+    ballAnimation = SpriteAnimationComponent.fromFrameData(ballSpriteSheet, ballSpriteAnimationData)
+    ..x = canvasSize.x - (screenUnitX)
+    ..y = groundHeight + (screenUnitY / 2)
+    ..size = ballSpriteSize;*/
+
 
 
 
     add(parallaxBackground);
-    add(peepAnimation);
+
+    add(_enemyManager);
+    add(_mrPeeps);
+    //add(ballAnimation);
 
 
 
     return super.onLoad();
   }
 
-  @override
+/*  @override
   void onGameResize(Vector2 canvasSize) {
     super.onGameResize(canvasSize);
     screenUnitX = canvasSize.x / 8;
@@ -68,9 +95,11 @@ class PeepGame extends FlameGame with TapDetector {
     if(peepAnimation.y < groundHeight) {
       peepAnimation.y += speed;
     }
-  }
 
-  @override
+   // ballAnimation.x -= speed * 2;
+  }*/
+
+/*  @override
   void onTap() {
     super.onTap();
     //peepAnimation.y = jumpHeight;
@@ -79,6 +108,12 @@ class PeepGame extends FlameGame with TapDetector {
     if(peepAnimation.y >= groundHeight) {
       peepAnimation.y -= screenUnitY * 1.8;
     }
+  }*/
+
+@override
+  void onTapDown(TapDownInfo info) {
+  _mrPeeps.jump();
+  super.onTapDown(info);
   }
 
 }
