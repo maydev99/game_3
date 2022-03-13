@@ -1,74 +1,66 @@
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
-import 'package:flame/sprite.dart';
+import 'package:flame/flame.dart';
+import 'package:flame/geometry.dart';
+import 'package:layout/enemy.dart';
 import 'package:layout/peep_run.dart';
 
-enum PeepAnimationStates { run }
-
-class MrPeeps extends SpriteAnimationGroupComponent with HasGameRef<PeepGame> {
-  static final _animationMap = {
-    PeepAnimationStates.run: SpriteAnimationData.sequenced(
-        amount: 3,
-        stepTime: 0.1,
-        textureSize: Vector2(256, 256),
-        texturePosition: Vector2.all(24),
-    )
-  };
-
-  double yMax = 0.0; //max height
-  double speedY = 0.0; //peeps speed on Y axis
-  final Timer _hitTimer = Timer(1);
-  static const double gravity = 800;
-
+class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGameRef<PeepGame> {
+  static Vector2 gravity = Vector2(0, 600);
+  Vector2 velocity = Vector2.zero();
+  bool isJumping = false;
+  double ground = 0.0;
   bool isHit = false;
 
-  MrPeeps(Image image) : super.fromFrameData(image, _animationMap);
+  @override
+  Future<void>? onLoad() async {
+    await super.onLoad();
+    var spriteSheet = await Flame.images.load('peeps3.png');
+    SpriteAnimationData data = SpriteAnimationData.sequenced(
+        amount: 3, stepTime: 0.1, textureSize: Vector2(256, 256));
+    ground = gameRef.size.y - 56;
+    anchor = Anchor.center;
+    animation = SpriteAnimation.fromFrameData(spriteSheet, data);
+    playing = true;
+    size = Vector2(128, 128);
+    position = Vector2(gameRef.canvasSize.x / 8, ground);
+  }
 
   @override
   void onMount() {
-    yMax = y;
-    _hitTimer.onTick = () {
-      current = PeepAnimationStates.run;
-      isHit = false;
-    };
+    final shape = HitboxRectangle(relation: Vector2(0.5,0.7));
+    addHitbox(shape);
     super.onMount();
   }
 
   @override
-  void update(double dt) {
-    speedY += gravity * dt;
-    y += speedY * dt;
-
-    if (isOnGround) {
-      y = yMax;
-      speedY = 0.0;
-      current = PeepAnimationStates.run;
-
+  void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
+    if((other is Enemy) && (!isHit)) {
+      hit();
     }
-
-
-
-    super.update(dt);
+    super.onCollision(intersectionPoints, other);
   }
 
-  // Returns true if dino is on ground.
-  bool get isOnGround => (y >= yMax);
+  @override
+  void update(double dt) {
+    super.update(dt);
+
+    position += velocity * dt - gravity * dt * dt / 2;
+    velocity += gravity * dt;
+
+    if (position.y > ground) {
+      velocity = Vector2(0, 0);
+      isJumping = false;
+    }
+  }
 
   void jump() {
-    if (isOnGround) {
-      speedY = -300;
-      print('jump');
-      current = PeepAnimationStates.run;
+    if (!isJumping) {
+      velocity += Vector2(0, -400);
+      isJumping = true;
     }
   }
 
-/*  var spriteSheet = await images.load('peeps3.png');
-  final spriteSize = Vector2(screenUnitX, screenUnitY);
-  SpriteAnimationData spriteAnimationData = SpriteAnimationData.sequenced(
-      amount: 3, stepTime: 0.1, textureSize: Vector2(256, 256));
-  peepAnimation =
-  SpriteAnimationComponent.fromFrameData(spriteSheet, spriteAnimationData)
-  ..x = canvasSize.x / 8
-  ..y = groundHeight
-  ..size = spriteSize;*/
+  void hit() {
+    print('Hit!');
+  }
 }

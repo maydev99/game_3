@@ -3,7 +3,7 @@ import 'package:flame/geometry.dart';
 import 'package:layout/enemy_data.dart';
 import 'package:layout/peep_run.dart';
 
-class Enemy extends SpriteAnimationComponent with HasGameRef<PeepGame> {
+class Enemy extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGameRef<PeepGame> {
 
   late final EnemyData enemyData;
 
@@ -19,7 +19,8 @@ class Enemy extends SpriteAnimationComponent with HasGameRef<PeepGame> {
 
   @override
   void onMount() {
-    //final shape = HitboxRectangle(relation: Vector2.all(0.8));
+    final shape = HitboxRectangle(relation: Vector2.all(0.8));
+    addHitbox(shape);
     size *= 0.2;
 
     super.onMount();
