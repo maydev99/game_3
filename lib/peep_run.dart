@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:layout/enemy_manager.dart';
+import 'package:layout/game_data_provider.dart';
 import 'package:layout/mr_peep.dart';
 
 import 'hud.dart';
@@ -11,10 +12,16 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   late final MrPeeps mrPeeps;
 
   late EnemyManager _enemyManager;
+  late GameDataProvider gameDataProvider;
+
 
   @override
   Future<void>? onLoad() async {
+    gameDataProvider= GameDataProvider();
+   // gameDataProvider = GameDataProvider();
     await images.load('rubber_ball.png');
+    //gameDataProvider.clearPoints();
+    //gameDataProvider.setLives(5);
 
 
     final parallaxBackground = await loadParallaxComponent(
@@ -49,6 +56,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   @override
   void onTapDown(TapDownInfo info) {
+   // gameDataProvider.addPoint();
     mrPeeps.jump();
   }
 }
