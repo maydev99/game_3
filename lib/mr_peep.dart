@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/geometry.dart';
 import 'package:layout/enemy.dart';
+import 'package:layout/game_data_provider.dart';
 import 'package:layout/peep_run.dart';
 
 class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGameRef<PeepGame> {
@@ -10,6 +11,8 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
   bool isJumping = false;
   double ground = 0.0;
   bool isHit = false;
+  final Timer _hitTimer = Timer(1);
+  final GameDataProvider gameDataProvider = GameDataProvider();
 
   @override
   Future<void>? onLoad() async {
@@ -29,6 +32,11 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
   void onMount() {
     final shape = HitboxRectangle(relation: Vector2(0.5,0.7));
     addHitbox(shape);
+
+    _hitTimer.onTick = () {
+      isHit = false;
+    };
+
     super.onMount();
   }
 
@@ -51,6 +59,10 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
       velocity = Vector2(0, 0);
       isJumping = false;
     }
+
+    gameDataProvider.lives;
+
+    _hitTimer.update(dt);
   }
 
   void jump() {
@@ -61,6 +73,15 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
   }
 
   void hit() {
-    print('Hit!');
+    isHit = true;
+    _hitTimer.start();
+    gameDataProvider.removeLife();
+   // print('Lives: ${gameDataProvider.lives}');
+    if(isHit) {
+     // print('Hit!');
+     print('Lives(MrPeep): ${gameDataProvider.lives}');
+
+    }
+
   }
 }

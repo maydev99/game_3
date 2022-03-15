@@ -30,7 +30,7 @@ class _HudState extends State<Hud> {
           children: [
             Selector<GameDataProvider, int>(
               selector: (_, gameDataProvider) => gameDataProvider.currentPoints,
-              builder: (_, points,__) {
+              builder: (_, points, __) {
                 return Text(
                   'Score: $points',
                   style: const TextStyle(color: Colors.white, fontSize: 22),
@@ -60,10 +60,15 @@ class _HudState extends State<Hud> {
                         color: Colors.white,
                         size: 35,
                       )),
-            const Text(
-              'Lives: 5',
-              style: TextStyle(color: Colors.white, fontSize: 22),
-            )
+            Selector<GameDataProvider, int>(
+              selector: (_, gameDataProvider) => gameDataProvider.lives,
+              builder: (_, lives, __) {
+                return Text(
+                  'Lives: $lives',
+                  style: const TextStyle(color: Colors.white, fontSize: 22),
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -18,10 +18,9 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   @override
   Future<void>? onLoad() async {
     gameDataProvider= GameDataProvider();
-   // gameDataProvider = GameDataProvider();
     await images.load('rubber_ball.png');
     //gameDataProvider.clearPoints();
-    //gameDataProvider.setLives(5);
+
 
 
     final parallaxBackground = await loadParallaxComponent(
@@ -48,6 +47,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     return super.onLoad();
   }
 
+
   @override
   void update(double dt) {
     overlays.add(Hud.id);
@@ -56,7 +56,6 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   @override
   void onTapDown(TapDownInfo info) {
-   // gameDataProvider.addPoint();
     mrPeeps.jump();
   }
 }
