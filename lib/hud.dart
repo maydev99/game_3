@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:layout/game_data_provider.dart';
 
 class Hud extends StatefulWidget {
-  static const id = 'Hud2';
+  static const id = 'Hud';
   final PeepGame gameRef;
 
   // final GameDataProvider gameDataProvider = GameDataProvider();
@@ -61,10 +61,10 @@ class _HudState extends State<Hud> {
                         size: 35,
                       )),
             Selector<GameDataProvider, int>(
-              selector: (_, gameDataProvider) => gameDataProvider.lives,
-              builder: (_, lives, __) {
+              selector: (_, gameDataProvider) => gameDataProvider.currentLives,
+              builder: (_, currentLives, __) {
                 return Text(
-                  'Lives: $lives',
+                  'Lives: $currentLives',
                   style: const TextStyle(color: Colors.white, fontSize: 22),
                 );
               },

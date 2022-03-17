@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 class GameDataProvider with ChangeNotifier{
 
   int _lives = 5;
-  int _points = 0;
+  int _points = 1;
 
   int get currentPoints => _points;
-  int get lives => _lives;
+  int get currentLives => _lives;
 
 
 
@@ -18,19 +18,19 @@ class GameDataProvider with ChangeNotifier{
   }*/
 
   addPoint() {
-    _points++;
+    _points = _points + 1;
     notifyListeners();
   }
 
   clearPoints() {
-    _points = 0;
+    _points = -1;
     notifyListeners();
   }
 
-  /*setLives(int life) {
+  setLives(int life) {
     _lives = life;
     notifyListeners();
-  }*/
+  }
 
   removeLife() {
     _lives--;

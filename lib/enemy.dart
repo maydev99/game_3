@@ -34,18 +34,13 @@ class Enemy extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGa
     position.x -= enemyData.speedX * dt;
 
     if(position.x < -enemyData.textureSize.x) {
-      removeFromParent();
-      print('Removed Enemy');
-    }
-
-    if(position.x < -enemyData.textureSize.x) {
-      print('Jumped Enemy');
       gameRef.gameDataProvider.addPoint();
-      print('POints: ${gameRef.gameDataProvider.currentPoints}');
-
-
-
+      removeFromParent();
+      //print('Removed Enemy');
     }
+
+
+
     super.update(dt);
   }
 

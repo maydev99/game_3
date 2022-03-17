@@ -60,7 +60,7 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
       isJumping = false;
     }
 
-    gameDataProvider.lives;
+   // gameDataProvider.currentLives;
 
     _hitTimer.update(dt);
   }
@@ -75,11 +75,9 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
   void hit() {
     isHit = true;
     _hitTimer.start();
-    gameDataProvider.removeLife();
-   // print('Lives: ${gameDataProvider.lives}');
+
     if(isHit) {
-     // print('Hit!');
-     print('Lives(MrPeep): ${gameDataProvider.lives}');
+      gameRef.gameDataProvider.removeLife();
 
     }
 
