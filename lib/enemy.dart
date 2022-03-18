@@ -23,7 +23,7 @@ class Enemy extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGa
   void onMount() {
     final shape = HitboxRectangle(relation: Vector2.all(0.8));
     addHitbox(shape);
-    size *= 0.2;
+    size *= 0.3;
 
     super.onMount();
   }

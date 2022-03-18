@@ -24,7 +24,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     enemy.anchor = Anchor.bottomLeft;
     enemy.position = Vector2(
       gameRef.size.x + 32,
-      gameRef.size.y - 30,
+      gameRef.size.y - 1,
     );
 
     if (enemyData.canFly) {
@@ -43,11 +43,11 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     if (_data.isEmpty) {
       _data.addAll([
         EnemyData(
-            image: gameRef.images.fromCache('rubber_ball.png'),
+            image: gameRef.images.fromCache('tort.png'),
             nFrames: 3,
             stepTime: 0.1,
             textureSize: Vector2(256, 256),
-            speedX: 180,
+            speedX: 220,
             canFly: false)
       ]);
     }

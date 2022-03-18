@@ -20,6 +20,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   Future<void>? onLoad() async {
     gameDataProvider= GameDataProvider();
     await images.load('rubber_ball.png');
+    await images.load('tort.png');
     //gameDataProvider.clearPoints();
 
 
@@ -36,6 +37,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     );
 
     enemyManager = EnemyManager();
+    //enemyManager.changePriorityWithoutResorting(2);
 
     add(parallaxBackground);
     startGamePlay();
@@ -65,26 +67,25 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void resetGame() {
-   // overlays.remove(GameOver.id);
-    //gameDataProvider.clearPoints();
-    //mrPeeps.removeFromParent();
     enemyManager.removeAllEnemies();
     enemyManager.removeFromParent();
-   // gameRef.gameDataProvider.setLives(5);
-    //enemyManager.removeAllEnemies();
-    //resumeEngine();
-   // gameRef.enemyManager.add(gameRef.enemyManager);
     add(enemyManager);
+
 
 
   }
 
   void startGamePlay() {
-    add(enemyManager);
+   //
+    // add(enemyManager);
     add(
       mrPeeps = MrPeeps()
-        ..width = 100
-        ..height = 100,
+        ..width = 50
+        ..height = 50,
     );
+
+    add(enemyManager);
+    mrPeeps.changePriorityWithoutResorting(1);
+    enemyManager.changePriorityWithoutResorting(2);
   }
 }
