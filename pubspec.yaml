@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: any
   wakelock: ^0.6.1+1
   provider: any
+  flame_audio: any
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:layout/audio_manager.dart';
 import 'package:layout/peep_run.dart';
 import 'package:provider/provider.dart';
 import 'package:layout/game_data_provider.dart';
+import 'audio_manager.dart';
 
 class Hud extends StatefulWidget {
   static const id = 'Hud';
@@ -41,8 +43,11 @@ class _HudState extends State<Hud> {
                 onPressed: () {
                   if (!isPaused) {
                     gameRef.pauseEngine();
+                    AudioManager.instance.pauseBgm();
+
                   } else {
                     gameRef.resumeEngine();
+                    AudioManager.instance.resumeBgm();
                   }
 
                   setState(() {

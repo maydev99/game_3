@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/geometry.dart';
+import 'package:layout/audio_manager.dart';
 import 'package:layout/enemy.dart';
 import 'package:layout/game_data_provider.dart';
 import 'package:layout/peep_run.dart';
@@ -68,6 +69,7 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
   void jump() {
     if (!isJumping) {
       velocity += Vector2(0, -400);
+      AudioManager.instance.playSfx('jump14.wav');
       isJumping = true;
     }
   }
@@ -77,6 +79,7 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
     _hitTimer.start();
 
     if(isHit) {
+      AudioManager.instance.playSfx('hurt7.wav');
       gameRef.gameDataProvider.removeLife();
 
     }

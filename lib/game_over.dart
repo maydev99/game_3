@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:layout/audio_manager.dart';
 import 'package:layout/game_data_provider.dart';
 import 'package:layout/peep_run.dart';
 import 'package:provider/provider.dart';
@@ -60,6 +61,7 @@ class _GameOverState extends State<GameOver> {
                       gameRef.gameDataProvider.setLives(5);
                       gameRef.gameDataProvider.clearPoints();
                       gameRef.resumeEngine();
+                      AudioManager.instance.startBgm('funnysong.mp3');
                       //gameRef.startGamePlay();
 
                     },
