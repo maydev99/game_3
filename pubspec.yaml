@@ -32,4 +32,5 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/peep_life.png
     - assets/audio/

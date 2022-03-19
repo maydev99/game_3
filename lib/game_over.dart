@@ -1,3 +1,4 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/audio_manager.dart';
 import 'package:layout/game_data_provider.dart';
@@ -74,6 +75,7 @@ class _GameOverState extends State<GameOver> {
                   MaterialButton(
                     onPressed: () {
                       print('Main Menu');
+
                       Navigator.pop(context);
                     },
                     color: Colors.blue,

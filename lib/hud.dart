@@ -19,6 +19,7 @@ class Hud extends StatefulWidget {
 
 class _HudState extends State<Hud> {
   bool isPaused = false;
+  bool hasMusicOn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,53 +31,120 @@ class _HudState extends State<Hud> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Selector<GameDataProvider, int>(
-              selector: (_, gameDataProvider) => gameDataProvider.currentPoints,
-              builder: (_, points, __) {
-                return Text(
-                  'Score: $points',
-                  style: const TextStyle(color: Colors.white, fontSize: 22),
-                );
-              },
-            ),
-            TextButton(
-                onPressed: () {
-                  if (!isPaused) {
-                    gameRef.pauseEngine();
-                    AudioManager.instance.pauseBgm();
-
-                  } else {
-                    gameRef.resumeEngine();
-                    AudioManager.instance.resumeBgm();
-                  }
-
-                  setState(() {
-                    isPaused = !isPaused;
-                  });
-                },
-                child: isPaused
-                    ? const Icon(
-                        Icons.play_circle_outline,
-                        color: Colors.white,
-                        size: 35,
-                      )
-                    : const Icon(
-                        Icons.pause_circle_outline,
-                        color: Colors.white,
-                        size: 35,
-                      )),
-            Selector<GameDataProvider, int>(
-              selector: (_, gameDataProvider) => gameDataProvider.currentLives,
-              builder: (_, currentLives, __) {
-                return Text(
-                  'Lives: $currentLives',
-                  style: const TextStyle(color: Colors.white, fontSize: 22),
-                );
-              },
-            ),
+            const ScoreDisplay(),
+            pauseButton(gameRef),
+            musicButton(),
+            const LivesDisplay(),
           ],
         ),
       ),
+    );
+  }
+
+  IconButton musicButton() {
+    return IconButton(
+        onPressed: () {
+          setState(() {
+            if (hasMusicOn) {
+              if(!isPaused) {
+                hasMusicOn = false;
+                AudioManager.instance.pauseBgm();
+              }
+
+            } else {
+
+              if(!isPaused) {
+                hasMusicOn = true;
+                AudioManager.instance.resumeBgm();
+              }
+
+            }
+          });
+        },
+        icon: hasMusicOn
+            ? const Icon(
+                Icons.music_note,
+                color: Colors.white,
+              )
+            : const Icon(
+                Icons.music_off,
+                color: Colors.red,
+              ));
+  }
+
+  TextButton pauseButton(PeepGame gameRef) {
+    return TextButton(
+        onPressed: () {
+          if (!isPaused) {
+            gameRef.pauseEngine();
+            AudioManager.instance.pauseBgm();
+          } else {
+            gameRef.resumeEngine();
+            if(hasMusicOn) {
+              AudioManager.instance.resumeBgm();
+            }
+
+          }
+
+          setState(() {
+            isPaused = !isPaused;
+          });
+        },
+        child: isPaused
+            ? const Icon(
+                Icons.play_circle_outline,
+                color: Colors.white,
+                size: 35,
+              )
+            : const Icon(
+                Icons.pause_circle_outline,
+                color: Colors.white,
+                size: 35,
+              ));
+  }
+}
+
+class LivesDisplay extends StatelessWidget {
+  const LivesDisplay({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Image.asset('assets/images/peep_life.png',
+        width: 35,
+        height: 35,),
+        Selector<GameDataProvider, int>(
+          selector: (_, gameDataProvider) => gameDataProvider.currentLives,
+          builder: (_, currentLives, __) {
+            return Text(
+              '$currentLives',
+              style: const TextStyle(color: Colors.white, fontSize: 22),
+            );
+          },
+        )
+      ],
+    );
+  }
+}
+
+class ScoreDisplay extends StatelessWidget {
+  const ScoreDisplay({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<GameDataProvider, int>(
+      selector: (_, gameDataProvider) => gameDataProvider.currentPoints,
+      builder: (_, points, __) {
+        return Text(
+          'Score: $points',
+          style: const TextStyle(color: Colors.white, fontSize: 22),
+        );
+      },
     );
   }
 }
