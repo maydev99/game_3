@@ -1,8 +1,7 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
-import 'package:layout/game_data_provider.dart';
-import 'package:layout/game_screen.dart';
-import 'package:layout/main_menu.dart';
+import 'package:layout/game/game_data_provider.dart';
+import 'package:layout/game/game_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 

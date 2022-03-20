@@ -1,10 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/geometry.dart';
-import 'package:layout/audio_manager.dart';
-import 'package:layout/enemy.dart';
-import 'package:layout/game_data_provider.dart';
-import 'package:layout/peep_run.dart';
+import 'package:layout/audio/audio_manager.dart';
+import 'package:layout/actors/enemy.dart';
+import 'package:layout/game/game_data_provider.dart';
+import 'package:layout/game/peep_run.dart';
 
 class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGameRef<PeepGame> {
   static Vector2 gravity = Vector2(0, 600);
@@ -20,7 +20,9 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
     await super.onLoad();
     var spriteSheet = await Flame.images.load('peeps3.png');
     SpriteAnimationData data = SpriteAnimationData.sequenced(
-        amount: 3, stepTime: 0.1, textureSize: Vector2(256, 256));
+        amount: 3,
+        stepTime: 0.1,
+        textureSize: Vector2(256, 256));
     ground = gameRef.size.y - 56;
     anchor = Anchor.center;
     animation = SpriteAnimation.fromFrameData(spriteSheet, data);

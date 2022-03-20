@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:layout/peep_run.dart';
+import 'package:layout/game/peep_run.dart';
 import 'package:provider/provider.dart';
 
 class GameStart extends StatefulWidget {

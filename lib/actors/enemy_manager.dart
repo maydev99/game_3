@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:layout/enemy.dart';
-import 'package:layout/enemy_data.dart';
-import 'package:layout/peep_run.dart';
+import 'package:layout/actors/enemy.dart';
+import 'package:layout/actors/enemy_data.dart';
+import 'package:layout/game/peep_run.dart';
 
 class EnemyManager extends Component with HasGameRef<PeepGame> {
   final List<EnemyData> _data = [];

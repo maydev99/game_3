@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:layout/audio_manager.dart';
-import 'package:layout/peep_run.dart';
+import 'package:layout/audio/audio_manager.dart';
+import 'package:layout/game/peep_run.dart';
+import 'package:layout/overlays/pause_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:layout/game_data_provider.dart';
-import 'audio_manager.dart';
+import 'package:layout/game/game_data_provider.dart';
+import '../audio/audio_manager.dart';
 
 class Hud extends StatefulWidget {
   static const id = 'Hud';
@@ -77,6 +78,8 @@ class _HudState extends State<Hud> {
         onPressed: () {
           if (!isPaused) {
             gameRef.pauseEngine();
+            gameRef.overlays.remove(Hud.id);
+            gameRef.overlays.add(PauseOverlay.id);
             AudioManager.instance.pauseBgm();
           } else {
             gameRef.resumeEngine();

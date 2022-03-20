@@ -2,13 +2,15 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
-import 'package:layout/audio_manager.dart';
-import 'package:layout/enemy_manager.dart';
-import 'package:layout/game_data_provider.dart';
-import 'package:layout/game_over.dart';
-import 'package:layout/mr_peep.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:layout/audio/audio_manager.dart';
+import 'package:layout/actors/enemy_manager.dart';
+import 'package:layout/game/game_data_provider.dart';
+import 'package:layout/overlays/game_over.dart';
+import 'package:layout/actors/mr_peep.dart';
+import 'package:layout/overlays/pause_overlay.dart';
 
-import 'hud.dart';
+import '../overlays/hud.dart';
 
 class PeepGame extends FlameGame with TapDetector, HasCollidables {
   late final MrPeeps mrPeeps;
@@ -20,21 +22,17 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     'funnysong.mp3',
     'hurt7.wav',
     'jump14.wav',
-
   ];
-
 
   @override
   Future<void>? onLoad() async {
-    gameDataProvider= GameDataProvider();
+    gameDataProvider = GameDataProvider();
     await images.load('rubber_ball.png');
     await images.load('tort.png');
 
     await AudioManager.instance.init(_audioAssets);
 
     AudioManager.instance.startBgm('funnysong.mp3');
-
-
 
     final parallaxBackground = await loadParallaxComponent(
       [
@@ -53,22 +51,18 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     add(parallaxBackground);
     startGamePlay();
 
-
-
     return super.onLoad();
   }
-
 
   @override
   void update(double dt) {
     overlays.add(Hud.id);
 
-    if(gameDataProvider.currentLives <= 0) {
+    if (gameDataProvider.currentLives <= 0) {
       overlays.remove(Hud.id);
       overlays.add(GameOver.id);
       pauseEngine();
       AudioManager.instance.pauseBgm();
-
     }
 
     super.update(dt);
@@ -79,13 +73,38 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     mrPeeps.jump();
   }
 
+  @override
+  void lifecycleStateChange(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        if (!(overlays.isActive(PauseOverlay.id)) &&
+            !(overlays.isActive(GameOver.id))) {
+          resumeEngine();
+        }
+
+        break;
+      case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.detached:
+        break;
+      case AppLifecycleState.inactive:
+        if (overlays.isActive(Hud.id)) {
+          overlays.remove(Hud.id);
+          overlays.add(PauseOverlay.id);
+          AudioManager.instance.pauseBgm();
+        }
+
+        pauseEngine();
+
+        break;
+    }
+    super.lifecycleStateChange(state);
+  }
+
   void resetGame() {
     enemyManager.removeAllEnemies();
     enemyManager.removeFromParent();
     add(enemyManager);
-
-
-
   }
 
   void startGamePlay() {
@@ -97,12 +116,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     //add(enemyManager);
     mrPeeps.changePriorityWithoutResorting(1);
-
   }
 
   void spawnEnemies() {
     add(enemyManager);
     enemyManager.changePriorityWithoutResorting(2);
-
   }
 }

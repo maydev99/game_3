@@ -1,13 +1,7 @@
-import 'dart:io';
-
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:layout/audio_manager.dart';
-import 'package:layout/game_data_provider.dart';
-import 'package:layout/game_screen.dart';
-import 'package:layout/main_menu.dart';
-import 'package:layout/peep_run.dart';
+import 'package:layout/audio/audio_manager.dart';
+import 'package:layout/game/game_data_provider.dart';
+import 'package:layout/game/peep_run.dart';
 import 'package:provider/provider.dart';
 
 class GameOver extends StatefulWidget {
@@ -69,7 +63,6 @@ class _GameOverState extends State<GameOver> {
                       gameRef.resumeEngine();
                       AudioManager.instance.startBgm('funnysong.mp3');
                       //gameRef.startGamePlay();
-
                     },
                     color: Colors.blue,
                     textColor: Colors.white,
@@ -77,7 +70,6 @@ class _GameOverState extends State<GameOver> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                   ),
-
                 ],
               ),
             ),
