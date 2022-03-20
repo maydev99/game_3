@@ -54,6 +54,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     startGamePlay();
 
 
+
     return super.onLoad();
   }
 
@@ -88,16 +89,20 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void startGamePlay() {
-   //
-    // add(enemyManager);
     add(
       mrPeeps = MrPeeps()
         ..width = 50
         ..height = 50,
     );
 
-    add(enemyManager);
+    //add(enemyManager);
     mrPeeps.changePriorityWithoutResorting(1);
+
+  }
+
+  void spawnEnemies() {
+    add(enemyManager);
     enemyManager.changePriorityWithoutResorting(2);
+
   }
 }

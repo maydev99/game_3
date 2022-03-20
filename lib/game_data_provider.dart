@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class GameDataProvider with ChangeNotifier{
 
   int _lives = 5;
-  int _points = 1;
+  int _points = 0;
 
   int get currentPoints => _points;
   int get currentLives => _lives;

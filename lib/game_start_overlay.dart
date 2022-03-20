@@ -1,26 +1,18 @@
-import 'dart:io';
-
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:layout/audio_manager.dart';
-import 'package:layout/game_data_provider.dart';
-import 'package:layout/game_screen.dart';
-import 'package:layout/main_menu.dart';
 import 'package:layout/peep_run.dart';
 import 'package:provider/provider.dart';
 
-class GameOver extends StatefulWidget {
-  static const id = 'GameOver';
+class GameStart extends StatefulWidget {
+  static const id = 'GameStart';
   final PeepGame gameRef;
 
-  const GameOver({Key? key, required this.gameRef}) : super(key: key);
+  const GameStart({Key? key, required this.gameRef}) : super(key: key);
 
   @override
-  _GameOverState createState() => _GameOverState();
+  _GameStartState createState() => _GameStartState();
 }
 
-class _GameOverState extends State<GameOver> {
+class _GameStartState extends State<GameStart> {
   //Variables and functions
 
   @override
@@ -43,37 +35,21 @@ class _GameOverState extends State<GameOver> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   const Text(
-                    'Game Over',
+                    'Peep Run',
                     style: TextStyle(
                         fontSize: 60,
                         fontFamily: 'Righteous',
                         color: Colors.yellow),
                   ),
-                  Selector<GameDataProvider, int>(
-                    selector: (_, gameDataProvider) =>
-                        gameDataProvider.currentPoints,
-                    builder: (_, score, __) {
-                      return Text(
-                        'Final Score: $score',
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 22),
-                      );
-                    },
-                  ),
                   MaterialButton(
                     onPressed: () {
-                      gameRef.overlays.remove(GameOver.id);
-                      gameRef.resetGame();
-                      gameRef.gameDataProvider.setLives(5);
-                      gameRef.gameDataProvider.clearPoints();
-                      gameRef.resumeEngine();
-                      AudioManager.instance.startBgm('funnysong.mp3');
-                      //gameRef.startGamePlay();
+                      gameRef.overlays.remove(GameStart.id);
+                      gameRef.spawnEnemies();
 
                     },
                     color: Colors.blue,
                     textColor: Colors.white,
-                    child: const Text('Play Again'),
+                    child: const Text('Start Game'),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                   ),

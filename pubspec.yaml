@@ -17,6 +17,7 @@ dependencies:
   wakelock: ^0.6.1+1
   provider: any
   flame_audio: any
+  minimize_app: any
 
 dev_dependencies:
   flutter_test:

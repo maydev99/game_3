@@ -27,6 +27,7 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
     playing = true;
     size = Vector2(128, 128);
     position = Vector2(gameRef.canvasSize.x / 8, ground);
+
   }
 
   @override
