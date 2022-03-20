@@ -177,13 +177,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  minimize_app:
-    dependency: "direct main"
-    description:
-      name: minimize_app
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.1"
   nested:
     dependency: transitive
     description:
@@ -363,7 +356,7 @@ packages:
       name: wakelock
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1+1"
+    version: "0.6.1+2"
   wakelock_macos:
     dependency: transitive
     description:
@@ -398,7 +391,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   xdg_directories:
     dependency: transitive
     description:

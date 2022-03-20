@@ -18,7 +18,7 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
-    var spriteSheet = await Flame.images.load('peeps3.png');
+    var spriteSheet = await Flame.images.load('peeps4.png');
     SpriteAnimationData data = SpriteAnimationData.sequenced(
         amount: 3,
         stepTime: 0.1,
@@ -72,7 +72,7 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
   void jump() {
     if (!isJumping) {
       velocity += Vector2(0, -400);
-      AudioManager.instance.playSfx('jump14.wav');
+      AudioManager.instance.playSfx('jump14.wav', 1);
       isJumping = true;
     }
   }
@@ -82,7 +82,7 @@ class MrPeeps extends SpriteAnimationComponent with HasHitboxes, Collidable, Has
     _hitTimer.start();
 
     if(isHit) {
-      AudioManager.instance.playSfx('hurt7.wav');
+      AudioManager.instance.playSfx('chicken_scream.mp3',0.4);
       gameRef.gameDataProvider.removeLife();
 
     }

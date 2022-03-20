@@ -29,7 +29,7 @@ class AudioManager {
     FlameAudio.bgm.stop();
   }
 
-  void playSfx(String filename) {
-    FlameAudio.audioCache.play(filename);
+  void playSfx(String filename, double volume) {
+    FlameAudio.audioCache.play(filename, volume: volume);
   }
 }
