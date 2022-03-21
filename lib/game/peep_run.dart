@@ -13,7 +13,7 @@ import 'package:layout/overlays/pause_overlay.dart';
 import '../overlays/hud.dart';
 
 class PeepGame extends FlameGame with TapDetector, HasCollidables {
-  late final MrPeeps mrPeeps;
+
 
   late EnemyManager enemyManager;
   late GameDataProvider gameDataProvider;
@@ -24,11 +24,14 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     'jump14.wav',
   ];
 
+  late MrPeeps _mrPeeps;
+
   @override
   Future<void>? onLoad() async {
     gameDataProvider = GameDataProvider();
     await images.load('rubber_ball.png');
     await images.load('tort.png');
+    await images.load('peeps4.png');
 
     await AudioManager.instance.init(_audioAssets);
 
@@ -45,8 +48,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       velocityMultiplierDelta: Vector2(1.9, 0),
     );
 
+    _mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
+
     enemyManager = EnemyManager();
-    //enemyManager.changePriorityWithoutResorting(2);
+
 
     add(parallaxBackground);
     startGamePlay();
@@ -70,7 +75,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   @override
   void onTapDown(TapDownInfo info) {
-    mrPeeps.jump();
+    _mrPeeps.jump();
   }
 
   @override
@@ -108,14 +113,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void startGamePlay() {
-    add(
-      mrPeeps = MrPeeps()
-        ..width = 50
-        ..height = 50,
-    );
+    add(_mrPeeps);
 
     //add(enemyManager);
-    mrPeeps.changePriorityWithoutResorting(1);
+    _mrPeeps.changePriorityWithoutResorting(1);
   }
 
   void spawnEnemies() {
