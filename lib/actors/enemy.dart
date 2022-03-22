@@ -17,6 +17,8 @@ class Enemy extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGa
             stepTime: enemyData.stepTime,
             textureSize: enemyData.textureSize),
     );
+
+
   }
 
   @override

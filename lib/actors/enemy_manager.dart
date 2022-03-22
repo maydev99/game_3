@@ -28,8 +28,11 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     );
 
     if (enemyData.canFly) {
-      final newHeight = _random.nextDouble() * 2 * enemyData.textureSize.y;
-      enemy.position.y -= newHeight;
+      List<double> heights = [gameRef.size.y - 200, gameRef.size.y - 100, gameRef.size.y - 30];
+      var randomHeight =(heights.toList()..shuffle()).first;
+      enemy.position.y = randomHeight;
+      /*final newHeight = _random.nextDouble() * 2 * enemyData.textureSize.y;
+      enemy.position.y -= newHeight;*/
     }
 
     enemy.size = enemyData.textureSize;
@@ -47,8 +50,16 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
             nFrames: 3,
             stepTime: 0.1,
             textureSize: Vector2(256, 256),
-            speedX: 220,
-            canFly: false)
+            speedX: 180,
+            canFly: false),
+        EnemyData(
+            image: gameRef.images.fromCache('bird.png'),
+            nFrames: 3,
+            stepTime: 0.1,
+            textureSize: Vector2(256, 256),
+            speedX: 200,
+            canFly: true
+        ),
       ]);
     }
     _timer.start();

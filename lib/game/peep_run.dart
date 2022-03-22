@@ -32,6 +32,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     await images.load('rubber_ball.png');
     await images.load('tort.png');
     await images.load('peeps4.png');
+    await images.load('bird.png');
 
     await AudioManager.instance.init(_audioAssets);
 
@@ -41,7 +42,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       [
         ParallaxImageData('bg1.png'),
         ParallaxImageData('bg2.png'),
-        ParallaxImageData('bg3.png'),
+        ParallaxImageData('bg35.png'),
         ParallaxImageData('bg5.png'),
       ],
       baseVelocity: Vector2(10, 0),
