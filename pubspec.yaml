@@ -17,6 +17,7 @@ dependencies:
   wakelock: ^0.6.1+1
   provider: any
   flame_audio: ^1.0.0
+  get_storage: ^2.0.3
 
 
 dev_dependencies:

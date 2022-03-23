@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/pause_overlay.dart';
@@ -9,6 +10,7 @@ import '../audio/audio_manager.dart';
 class Hud extends StatefulWidget {
   static const id = 'Hud';
   final PeepGame gameRef;
+
 
   // final GameDataProvider gameDataProvider = GameDataProvider();
 
@@ -21,10 +23,15 @@ class Hud extends StatefulWidget {
 class _HudState extends State<Hud> {
   bool isPaused = false;
   bool hasMusicOn = true;
+  var box = GetStorage();
+
 
   @override
   Widget build(BuildContext context) {
     var gameRef = widget.gameRef;
+    var highScore = box.read('high');
+    highScore ??= 0;
+
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
       child: Container(
@@ -36,6 +43,11 @@ class _HudState extends State<Hud> {
             pauseButton(gameRef),
             musicButton(),
             const LivesDisplay(),
+            Text('High: $highScore',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22
+            ),)
           ],
         ),
       ),

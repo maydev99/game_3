@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/actors/enemy_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
@@ -17,6 +18,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   late EnemyManager enemyManager;
   late GameDataProvider gameDataProvider;
+  final box = GetStorage();
 
   static const _audioAssets = [
     'funnysong.mp3',
@@ -66,9 +68,16 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     if (gameDataProvider.currentLives <= 0) {
       overlays.remove(Hud.id);
-      overlays.add(GameOver.id);
       pauseEngine();
       AudioManager.instance.pauseBgm();
+      var score = gameDataProvider.currentPoints;
+      var highScore = box.read('high');
+      highScore ??= 0;
+      if(score > highScore) {
+        box.write('high', score);
+      }
+      overlays.add(GameOver.id);
+
     }
 
     super.update(dt);

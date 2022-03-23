@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
@@ -15,11 +16,14 @@ class GameOver extends StatefulWidget {
 }
 
 class _GameOverState extends State<GameOver> {
-  //Variables and functions
+  late int highScore;
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
     var gameRef = widget.gameRef;
+    highScore = box.read('high');
+
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
       child: Center(
@@ -50,25 +54,33 @@ class _GameOverState extends State<GameOver> {
                       return Text(
                         'Final Score: $score',
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 22),
+                            const TextStyle(color: Colors.white, fontSize: 26),
                       );
                     },
                   ),
-                  MaterialButton(
-                    onPressed: () {
-                      gameRef.overlays.remove(GameOver.id);
-                      gameRef.resetGame();
-                      gameRef.gameDataProvider.setLives(5);
-                      gameRef.gameDataProvider.clearPoints();
-                      gameRef.resumeEngine();
-                      AudioManager.instance.startBgm('funnysong.mp3');
-                      //gameRef.startGamePlay();
-                    },
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    child: const Text('Play Again'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                  Text('High Score: $highScore',
+                  style: const TextStyle(
+                    color: Colors.yellow,
+                    fontSize: 18
+                  ),),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      onPressed: () {
+                        gameRef.overlays.remove(GameOver.id);
+                        gameRef.resetGame();
+                        gameRef.gameDataProvider.setLives(5);
+                        gameRef.gameDataProvider.clearPoints();
+                        gameRef.resumeEngine();
+                        AudioManager.instance.startBgm('funnysong.mp3');
+                        //gameRef.startGamePlay();
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      child: const Text('Play Again'),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                    ),
                   ),
                 ],
               ),
