@@ -28,8 +28,12 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     );
 
     if (enemyData.canFly) {
-      List<double> heights = [gameRef.size.y - 200, gameRef.size.y - 100, gameRef.size.y - 30];
-      var randomHeight =(heights.toList()..shuffle()).first;
+      List<double> heights = [
+        gameRef.size.y - 200,
+        gameRef.size.y - 100,
+        gameRef.size.y - 30
+      ];
+      var randomHeight = (heights.toList()..shuffle()).first;
       enemy.position.y = randomHeight;
       /*final newHeight = _random.nextDouble() * 2 * enemyData.textureSize.y;
       enemy.position.y -= newHeight;*/
@@ -58,8 +62,14 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
             stepTime: 0.1,
             textureSize: Vector2(256, 256),
             speedX: 200,
-            canFly: true
-        ),
+            canFly: true),
+        EnemyData(
+            image: gameRef.images.fromCache('dog.png'),
+            nFrames: 4,
+            stepTime: 0.1,
+            textureSize: Vector2(256, 256),
+            speedX: 220,
+            canFly: false)
       ]);
     }
     _timer.start();

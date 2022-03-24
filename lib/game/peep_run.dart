@@ -35,6 +35,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     await images.load('tort.png');
     await images.load('peeps4.png');
     await images.load('bird.png');
+    await images.load('dog.png');
 
     await AudioManager.instance.init(_audioAssets);
 
