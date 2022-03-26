@@ -44,7 +44,7 @@ class _HudState extends State<Hud> {
             musicButton(),
             const LivesDisplay(),
             Text('High: $highScore',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 22
             ),)

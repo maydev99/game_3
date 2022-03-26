@@ -38,5 +38,10 @@ class GameDataProvider with ChangeNotifier{
 
   }
 
+  addBonusPoints(int bonusPoints) {
+    _points = currentPoints + bonusPoints;
+    notifyListeners();
+  }
+
 
 }

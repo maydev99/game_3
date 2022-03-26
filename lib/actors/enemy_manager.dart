@@ -10,6 +10,9 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
 
   final Random _random = Random();
 
+
+
+
   final Timer _timer = Timer(2, repeat: true);
 
   EnemyManager() {
@@ -17,7 +20,17 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
   }
 
   void spawnRandomEnemy() {
-    final randomIndex = _random.nextInt(_data.length);
+    var score = gameRef.gameDataProvider.currentPoints;
+    print('Score: $score');
+    late int randomIndex;
+    if(score < 20) {
+      randomIndex = _random.nextInt(1);
+    } else if ( score >=20 && score < 50) {
+      randomIndex = _random.nextInt(2);
+    } else {
+      randomIndex = _random.nextInt(3);
+    }
+    //final randomIndex = _random.nextInt(_data.length);
     final enemyData = _data.elementAt(randomIndex);
     final enemy = Enemy(enemyData);
 
@@ -35,8 +48,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
       ];
       var randomHeight = (heights.toList()..shuffle()).first;
       enemy.position.y = randomHeight;
-      /*final newHeight = _random.nextDouble() * 2 * enemyData.textureSize.y;
-      enemy.position.y -= newHeight;*/
+
     }
 
     enemy.size = enemyData.textureSize;

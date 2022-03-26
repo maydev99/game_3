@@ -9,6 +9,7 @@ import 'package:layout/actors/enemy_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/overlays/game_over.dart';
 import 'package:layout/actors/mr_peep.dart';
+import 'package:layout/overlays/level_up_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
 
 import '../overlays/hud.dart';
@@ -19,14 +20,19 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   late EnemyManager enemyManager;
   late GameDataProvider gameDataProvider;
   final box = GetStorage();
+  late ParallaxComponent levelOnePC;
+  late ParallaxComponent levelTwoPC;
+
 
   static const _audioAssets = [
     'funnysong.mp3',
     'hurt7.wav',
     'jump14.wav',
+    'underground.mp3',
   ];
 
-  late MrPeeps _mrPeeps;
+  late MrPeeps
+  mrPeeps;
 
   @override
   Future<void>? onLoad() async {
@@ -41,7 +47,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     AudioManager.instance.startBgm('funnysong.mp3');
 
-    final parallaxBackground = await loadParallaxComponent(
+    levelOnePC = await loadParallaxComponent(
       [
         ParallaxImageData('bg1.png'),
         ParallaxImageData('bg2.png'),
@@ -52,12 +58,24 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       velocityMultiplierDelta: Vector2(1.9, 0),
     );
 
-    _mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
+    levelTwoPC = await loadParallaxComponent([
+      ParallaxImageData('bg1.png'),
+      ParallaxImageData('bg2.png'),
+      ParallaxImageData('bg3.png'),
+      ParallaxImageData('bg4.png'),
+    ],
+      baseVelocity: Vector2(10, 0),
+      velocityMultiplierDelta: Vector2(1.9, 0),
+    );
+
+
+
+    mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
 
     enemyManager = EnemyManager();
 
 
-    add(parallaxBackground);
+    add(levelOnePC);
     startGamePlay();
 
     return super.onLoad();
@@ -81,12 +99,29 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     }
 
+    if(gameDataProvider.currentPoints == 100) {
+      //pauseEngine();
+      AudioManager.instance.stopBgm();
+      overlays.add(LevelUpOverlay.id);
+      //remove(levelOnePC);
+      remove(mrPeeps);
+      //enemyManager.removeAllEnemies();
+      //enemyManager.removeFromParent();
+      remove(enemyManager);
+      //add(levelTwoPC);
+
+
+
+
+
+    }
+
     super.update(dt);
   }
 
   @override
   void onTapDown(TapDownInfo info) {
-    _mrPeeps.jump();
+    mrPeeps.jump();
   }
 
   @override
@@ -124,10 +159,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void startGamePlay() {
-    add(_mrPeeps);
+    add(mrPeeps);
 
     //add(enemyManager);
-    _mrPeeps.changePriorityWithoutResorting(1);
+    mrPeeps.changePriorityWithoutResorting(1);
   }
 
   void spawnEnemies() {
