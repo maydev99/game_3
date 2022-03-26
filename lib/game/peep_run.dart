@@ -22,6 +22,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   final box = GetStorage();
   late ParallaxComponent levelOnePC;
   late ParallaxComponent levelTwoPC;
+  int level = 1;
 
 
   static const _audioAssets = [
@@ -59,10 +60,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     );
 
     levelTwoPC = await loadParallaxComponent([
-      ParallaxImageData('bg1.png'),
-      ParallaxImageData('bg2.png'),
-      ParallaxImageData('bg3.png'),
-      ParallaxImageData('bg4.png'),
+      ParallaxImageData('bg2_1.png'),
+      ParallaxImageData('bg2_2.png'),
+      ParallaxImageData('bg2_3.png'),
+      ParallaxImageData('bg2_4.png'),
     ],
       baseVelocity: Vector2(10, 0),
       velocityMultiplierDelta: Vector2(1.9, 0),
@@ -103,6 +104,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       //pauseEngine();
       AudioManager.instance.stopBgm();
       overlays.add(LevelUpOverlay.id);
+      level = 2;
       //remove(levelOnePC);
       remove(mrPeeps);
       //enemyManager.removeAllEnemies();
@@ -153,12 +155,17 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void resetGame() {
+    if(level == 2) {
+      remove(levelTwoPC);
+      add(levelOnePC);
+    }
     enemyManager.removeAllEnemies();
     enemyManager.removeFromParent();
     add(enemyManager);
   }
 
   void startGamePlay() {
+    add(levelOnePC);
     add(mrPeeps);
 
     //add(enemyManager);
