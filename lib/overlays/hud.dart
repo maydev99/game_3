@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
+import 'package:layout/overlays/game_start_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:layout/game/game_data_provider.dart';
@@ -88,7 +89,7 @@ class _HudState extends State<Hud> {
   TextButton pauseButton(PeepGame gameRef) {
     return TextButton(
         onPressed: () {
-          if (!isPaused) {
+          if (!isPaused)  {
             gameRef.pauseEngine();
             gameRef.overlays.remove(Hud.id);
             gameRef.overlays.add(PauseOverlay.id);

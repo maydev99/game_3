@@ -9,10 +9,6 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
   final List<EnemyData> _data = [];
 
   final Random _random = Random();
-
-
-
-
   final Timer _timer = Timer(2, repeat: true);
 
   EnemyManager() {
@@ -21,7 +17,6 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
 
   void spawnRandomEnemy() {
     var score = gameRef.gameDataProvider.currentPoints;
-    print('Score: $score');
     late int randomIndex;
     if(score < 20) {
       randomIndex = _random.nextInt(1);
@@ -97,7 +92,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
   void removeAllEnemies() {
     final enemies = gameRef.children.whereType<Enemy>();
     for (var element in enemies) {
-      element.remove;
+      element.removeFromParent();
     }
   }
 }

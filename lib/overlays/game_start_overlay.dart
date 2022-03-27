@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:layout/game/peep_run.dart';
+import 'package:layout/overlays/hud.dart';
 import 'package:provider/provider.dart';
 
 class GameStart extends StatefulWidget {
@@ -44,6 +45,7 @@ class _GameStartState extends State<GameStart> {
                   MaterialButton(
                     onPressed: () {
                       gameRef.overlays.remove(GameStart.id);
+                      gameRef.overlays.add(Hud.id);
                       gameRef.spawnEnemies();
 
                     },

@@ -23,7 +23,7 @@ class GameDataProvider with ChangeNotifier{
   }
 
   clearPoints() {
-    _points = -1;
+    _points = 0;
     notifyListeners();
   }
 

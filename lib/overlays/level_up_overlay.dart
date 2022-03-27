@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:layout/actors/enemy_manager.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
-import 'package:layout/overlays/hud.dart';
 import 'package:provider/provider.dart';
 
 class LevelUpOverlay extends StatefulWidget {
@@ -59,7 +57,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       gameRef.gameDataProvider.addBonusPoints(25);
                       AudioManager.instance.pauseBgm();
                       AudioManager.instance.stopBgm();
-                      AudioManager.instance.startBgm('underground.mp3');
+                      AudioManager.instance.startBgm('steeldrum.mp3');
                       gameRef.remove(gameRef.levelOnePC);
                       gameRef.add(gameRef.levelTwoPC);
                       gameRef.add(gameRef.enemyManager);
@@ -67,7 +65,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
 
 
                       //gameRef.overlays.add(Hud.id);
-                      //gameRef.resumeEngine();
+                      gameRef.resumeEngine();
 
 
                     },

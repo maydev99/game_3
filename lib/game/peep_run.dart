@@ -27,9 +27,9 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   static const _audioAssets = [
     'funnysong.mp3',
-    'hurt7.wav',
     'jump14.wav',
     'underground.mp3',
+    'steeldrum.mp3',
   ];
 
   late MrPeeps
@@ -38,7 +38,6 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   @override
   Future<void>? onLoad() async {
     gameDataProvider = GameDataProvider();
-    await images.load('rubber_ball.png');
     await images.load('tort.png');
     await images.load('peeps4.png');
     await images.load('bird.png');
@@ -61,9 +60,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     levelTwoPC = await loadParallaxComponent([
       ParallaxImageData('bg2_1.png'),
-      ParallaxImageData('bg2_2.png'),
       ParallaxImageData('bg2_3.png'),
-      ParallaxImageData('bg2_4.png'),
+      ParallaxImageData('bg2_21.png'),
+
+      ParallaxImageData('bg2_41.png'),
     ],
       baseVelocity: Vector2(10, 0),
       velocityMultiplierDelta: Vector2(1.9, 0),
@@ -100,21 +100,15 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     }
 
+    //Start Level 2 at 100 points
     if(gameDataProvider.currentPoints == 100) {
-      //pauseEngine();
+      pauseEngine();
       AudioManager.instance.stopBgm();
       overlays.add(LevelUpOverlay.id);
       level = 2;
-      //remove(levelOnePC);
       remove(mrPeeps);
-      //enemyManager.removeAllEnemies();
-      //enemyManager.removeFromParent();
+      enemyManager.removeAllEnemies();
       remove(enemyManager);
-      //add(levelTwoPC);
-
-
-
-
 
     }
 
@@ -173,6 +167,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void spawnEnemies() {
+   // overlays.add(Hud.id);
     add(enemyManager);
     enemyManager.changePriorityWithoutResorting(2);
   }
