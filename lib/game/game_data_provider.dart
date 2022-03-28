@@ -9,14 +9,6 @@ class GameDataProvider with ChangeNotifier{
   int get currentLives => _lives;
 
 
-
- /* set lives(int value) {
-    if(value <=5 && value >= 0) {
-      _lives = value;
-      notifyListeners();
-    }
-  }*/
-
   addPoint() {
     _points = _points + 1;
     notifyListeners();
@@ -29,6 +21,11 @@ class GameDataProvider with ChangeNotifier{
 
   setLives(int life) {
     _lives = life;
+    notifyListeners();
+  }
+
+  setPoints(int points) {
+    _points = points;
     notifyListeners();
   }
 

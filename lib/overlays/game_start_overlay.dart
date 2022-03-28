@@ -46,6 +46,8 @@ class _GameStartState extends State<GameStart> {
                     onPressed: () {
                       gameRef.overlays.remove(GameStart.id);
                       gameRef.overlays.add(Hud.id);
+                      gameRef.loadLevelState();
+                      gameRef.startGamePlay();
                       gameRef.spawnEnemies();
 
                     },

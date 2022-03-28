@@ -18,13 +18,31 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
   void spawnRandomEnemy() {
     var score = gameRef.gameDataProvider.currentPoints;
     late int randomIndex;
-    if(score < 20) {
+
+    /*switch (score) {
+      case >1:
+        randomIndex = _random.nextInt(1);
+        break;
+      case 20:
+        randomIndex = _random.nextInt(2);
+        break;
+      case 50:
+        randomIndex = _random.nextInt(3);
+        break;
+      case 200:
+        randomIndex = _random.nextInt(4);
+        break;
+    }*/
+    if (score < 20) {
       randomIndex = _random.nextInt(1);
-    } else if ( score >=20 && score < 50) {
+    } else if (score >= 20 && score < 50) {
       randomIndex = _random.nextInt(2);
-    } else {
+    } else if (score >= 50 && score < 200) {
       randomIndex = _random.nextInt(3);
+    } else {
+      randomIndex = _random.nextInt(4);
     }
+    //randomIndex = _random.nextInt(4);
     //final randomIndex = _random.nextInt(_data.length);
     final enemyData = _data.elementAt(randomIndex);
     final enemy = Enemy(enemyData);
@@ -43,7 +61,6 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
       ];
       var randomHeight = (heights.toList()..shuffle()).first;
       enemy.position.y = randomHeight;
-
     }
 
     enemy.size = enemyData.textureSize;
@@ -76,6 +93,13 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
             stepTime: 0.1,
             textureSize: Vector2(256, 256),
             speedX: 220,
+            canFly: false),
+        EnemyData(
+            image: gameRef.images.fromCache('rocket_tort.png'),
+            nFrames: 3,
+            stepTime: 0.1,
+            textureSize: Vector2(256, 256),
+            speedX: 300,
             canFly: false)
       ]);
     }

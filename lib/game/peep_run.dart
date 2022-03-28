@@ -22,7 +22,12 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   final box = GetStorage();
   late ParallaxComponent levelOnePC;
   late ParallaxComponent levelTwoPC;
-  int level = 1;
+  int savedLevel = 1;
+  int savedScore = 0;
+  int savedLives = 5;
+  int level = 0;
+  int newLevelLives = 5;
+  int bonusPoints = 25;
 
 
   static const _audioAssets = [
@@ -42,10 +47,11 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     await images.load('peeps4.png');
     await images.load('bird.png');
     await images.load('dog.png');
+    await images.load('rocket_tort.png');
 
     await AudioManager.instance.init(_audioAssets);
 
-    AudioManager.instance.startBgm('funnysong.mp3');
+    //AudioManager.instance.startBgm('funnysong.mp3');
 
     levelOnePC = await loadParallaxComponent(
       [
@@ -76,7 +82,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     enemyManager = EnemyManager();
 
 
-    add(levelOnePC);
+    //add(levelOnePC);
     startGamePlay();
 
     return super.onLoad();
@@ -109,6 +115,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       remove(mrPeeps);
       enemyManager.removeAllEnemies();
       remove(enemyManager);
+      saveLevelState(level, gameDataProvider.currentLives + newLevelLives, gameDataProvider.currentPoints + bonusPoints);
 
     }
 
@@ -159,7 +166,20 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void startGamePlay() {
-    add(levelOnePC);
+    loadLevelState();
+      switch (savedLevel) {
+      case 1:
+        add(levelOnePC);
+        AudioManager.instance.startBgm('funnysong.mp3');
+        break;
+      case 2:
+        add(levelTwoPC);
+        AudioManager.instance.startBgm('steeldrum.mp3');
+        break;
+    }
+    gameDataProvider.setPoints(savedScore);
+    gameDataProvider.setLives(savedLives);
+    //add(levelOnePC);
     add(mrPeeps);
 
     //add(enemyManager);
@@ -171,4 +191,22 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     add(enemyManager);
     enemyManager.changePriorityWithoutResorting(2);
   }
+
+  void saveLevelState(int level, int lives, int score) {
+    box.write('level', level);
+    box.write('lives', lives);
+    box.write('score', score);
+  }
+
+  void loadLevelState() {
+    savedLevel = box.read('level') ?? 1;
+    savedLives = box.read('lives') ?? 5;
+    savedScore = box.read('score') ?? 0;
+
+
+  }
+
+
+
+
 }

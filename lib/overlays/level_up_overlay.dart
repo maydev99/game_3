@@ -44,16 +44,17 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                         color: Colors.yellow),
                   ),
                   const Text(
-                    'Lives Restored to 5\n25 Bonus Points',
+                    '-Level Bonus +5 Lives\n-25 Bonus Points',
                     style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white),
+                        fontSize: 20,
+                        color: Colors.yellow),
                   ),
 
                   MaterialButton(
                     onPressed: () {
                       gameRef.overlays.remove(LevelUpOverlay.id);
-                      gameRef.gameDataProvider.setLives(5);
+                      int curLives = gameRef.gameDataProvider.currentLives;
+                      gameRef.gameDataProvider.setLives(curLives + 5);
                       gameRef.gameDataProvider.addBonusPoints(25);
                       AudioManager.instance.pauseBgm();
                       AudioManager.instance.stopBgm();

@@ -69,11 +69,12 @@ class _GameOverState extends State<GameOver> {
                       onPressed: () {
                         gameRef.overlays.remove(GameOver.id);
                         gameRef.resetGame();
-                        gameRef.gameDataProvider.setLives(5);
-                        gameRef.gameDataProvider.clearPoints();
+                       // gameRef.gameDataProvider.setLives(5);
+                        //gameRef.gameDataProvider.clearPoints();
                         gameRef.resumeEngine();
-                        AudioManager.instance.startBgm('funnysong.mp3');
-                        //gameRef.startGamePlay();
+                        AudioManager.instance.resumeBgm();
+                        //AudioManager.instance.startBgm('funnysong.mp3');
+                        gameRef.startGamePlay();
                       },
                       color: Colors.blue,
                       textColor: Colors.white,
