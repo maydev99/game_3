@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/actors/enemy_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
+import 'package:layout/level/level_data.dart';
 import 'package:layout/overlays/game_over.dart';
 import 'package:layout/actors/mr_peep.dart';
 import 'package:layout/overlays/level_up_overlay.dart';
@@ -15,20 +16,18 @@ import 'package:layout/overlays/pause_overlay.dart';
 import '../overlays/hud.dart';
 
 class PeepGame extends FlameGame with TapDetector, HasCollidables {
-
-
   late EnemyManager enemyManager;
   late GameDataProvider gameDataProvider;
   final box = GetStorage();
-  late ParallaxComponent levelOnePC;
-  late ParallaxComponent levelTwoPC;
+  late ParallaxComponent parallaxComponent;
+
   int savedLevel = 1;
   int savedScore = 0;
   int savedLives = 5;
   int level = 0;
   int newLevelLives = 5;
   int bonusPoints = 25;
-
+  var levelData = LevelData();
 
   static const _audioAssets = [
     'funnysong.mp3',
@@ -37,8 +36,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     'steeldrum.mp3',
   ];
 
-  late MrPeeps
-  mrPeeps;
+  late MrPeeps mrPeeps;
 
   @override
   Future<void>? onLoad() async {
@@ -51,36 +49,25 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     await AudioManager.instance.init(_audioAssets);
 
-    //AudioManager.instance.startBgm('funnysong.mp3');
+    loadLevelState();
+    int myIndex = savedLevel - 1;
 
-    levelOnePC = await loadParallaxComponent(
+    //setParallax(myIndex);
+
+    parallaxComponent = await loadParallaxComponent(
       [
-        ParallaxImageData('bg1.png'),
-        ParallaxImageData('bg2.png'),
-        ParallaxImageData('bg35.png'),
-        ParallaxImageData('bg5.png'),
+        ParallaxImageData(levelData.data[myIndex].bg1),
+        ParallaxImageData(levelData.data[myIndex].bg2),
+        ParallaxImageData(levelData.data[myIndex].bg3),
+        ParallaxImageData(levelData.data[myIndex].bg4),
       ],
       baseVelocity: Vector2(10, 0),
       velocityMultiplierDelta: Vector2(1.9, 0),
     );
 
-    levelTwoPC = await loadParallaxComponent([
-      ParallaxImageData('bg2_1.png'),
-      ParallaxImageData('bg2_3.png'),
-      ParallaxImageData('bg2_21.png'),
-
-      ParallaxImageData('bg2_41.png'),
-    ],
-      baseVelocity: Vector2(10, 0),
-      velocityMultiplierDelta: Vector2(1.9, 0),
-    );
-
-
-
     mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
 
     enemyManager = EnemyManager();
-
 
     //add(levelOnePC);
     startGamePlay();
@@ -99,15 +86,14 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       var score = gameDataProvider.currentPoints;
       var highScore = box.read('high');
       highScore ??= 0;
-      if(score > highScore) {
+      if (score > highScore) {
         box.write('high', score);
       }
       overlays.add(GameOver.id);
-
     }
 
     //Start Level 2 at 100 points
-    if(gameDataProvider.currentPoints == 100) {
+    if (gameDataProvider.currentPoints == 10) {
       pauseEngine();
       AudioManager.instance.stopBgm();
       overlays.add(LevelUpOverlay.id);
@@ -115,8 +101,9 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       remove(mrPeeps);
       enemyManager.removeAllEnemies();
       remove(enemyManager);
-      saveLevelState(level, gameDataProvider.currentLives + newLevelLives, gameDataProvider.currentPoints + bonusPoints);
-
+      saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
+          gameDataProvider.currentPoints + bonusPoints);
+      setParallax(1);
     }
 
     super.update(dt);
@@ -156,10 +143,6 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void resetGame() {
-    if(level == 2) {
-      remove(levelTwoPC);
-      add(levelOnePC);
-    }
     enemyManager.removeAllEnemies();
     enemyManager.removeFromParent();
     add(enemyManager);
@@ -167,27 +150,30 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   void startGamePlay() {
     loadLevelState();
-      switch (savedLevel) {
-      case 1:
-        add(levelOnePC);
-        AudioManager.instance.startBgm('funnysong.mp3');
-        break;
-      case 2:
-        add(levelTwoPC);
-        AudioManager.instance.startBgm('steeldrum.mp3');
-        break;
-    }
-    gameDataProvider.setPoints(savedScore);
-    gameDataProvider.setLives(savedLives);
-    //add(levelOnePC);
-    add(mrPeeps);
+    int index = savedLevel - 1;
+    setParallax(index);
+    add(parallaxComponent);
+    AudioManager.instance.startBgm(levelData.data[index].bgm);
 
-    //add(enemyManager);
+    add(mrPeeps);
     mrPeeps.changePriorityWithoutResorting(1);
   }
 
+  Future<void> setParallax(int myIndex) async {
+    parallaxComponent = await loadParallaxComponent(
+      [
+        ParallaxImageData(levelData.data[myIndex].bg1),
+        ParallaxImageData(levelData.data[myIndex].bg2),
+        ParallaxImageData(levelData.data[myIndex].bg3),
+        ParallaxImageData(levelData.data[myIndex].bg4),
+      ],
+      baseVelocity: Vector2(10, 0),
+      velocityMultiplierDelta: Vector2(1.9, 0),
+    );
+  }
+
   void spawnEnemies() {
-   // overlays.add(Hud.id);
+    // overlays.add(Hud.id);
     add(enemyManager);
     enemyManager.changePriorityWithoutResorting(2);
   }
@@ -202,11 +188,5 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     savedLevel = box.read('level') ?? 1;
     savedLives = box.read('lives') ?? 5;
     savedScore = box.read('score') ?? 0;
-
-
   }
-
-
-
-
 }

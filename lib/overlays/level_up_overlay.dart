@@ -56,16 +56,9 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       int curLives = gameRef.gameDataProvider.currentLives;
                       gameRef.gameDataProvider.setLives(curLives + 5);
                       gameRef.gameDataProvider.addBonusPoints(25);
-                      AudioManager.instance.pauseBgm();
-                      AudioManager.instance.stopBgm();
-                      AudioManager.instance.startBgm('steeldrum.mp3');
-                      gameRef.remove(gameRef.levelOnePC);
-                      gameRef.add(gameRef.levelTwoPC);
-                      gameRef.add(gameRef.enemyManager);
-                      gameRef.add(gameRef.mrPeeps);
-
-
-                      //gameRef.overlays.add(Hud.id);
+                      gameRef.startGamePlay();
+                      gameRef.resumeEngine();
+                      gameRef.spawnEnemies();
                       gameRef.resumeEngine();
 
 
