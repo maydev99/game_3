@@ -4,12 +4,12 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/actors/enemy_manager.dart';
+import 'package:layout/actors/mr_peep.dart';
+import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/level/level_data.dart';
 import 'package:layout/overlays/game_over.dart';
-import 'package:layout/actors/mr_peep.dart';
 import 'package:layout/overlays/level_up_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
 
@@ -52,8 +52,6 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     loadLevelState();
     int myIndex = savedLevel - 1;
 
-    //setParallax(myIndex);
-
     parallaxComponent = await loadParallaxComponent(
       [
         ParallaxImageData(levelData.data[myIndex].bg1),
@@ -79,6 +77,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   void update(double dt) {
     overlays.add(Hud.id);
 
+    //Game Over
     if (gameDataProvider.currentLives <= 0) {
       overlays.remove(Hud.id);
       pauseEngine();
@@ -93,10 +92,9 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     }
 
     //Start Level 2 at 100 points
-    if (gameDataProvider.currentPoints == 10) {
+    if (gameDataProvider.currentPoints == levelData.data[0].endScore) {
       pauseEngine();
       AudioManager.instance.stopBgm();
-      overlays.add(LevelUpOverlay.id);
       level = 2;
       remove(mrPeeps);
       enemyManager.removeAllEnemies();
@@ -104,6 +102,21 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
           gameDataProvider.currentPoints + bonusPoints);
       setParallax(1);
+      overlays.add(LevelUpOverlay.id);
+    }
+
+    //Start Level 3 at 200 points
+    if(gameDataProvider.currentPoints == levelData.data[1].endScore) {
+      pauseEngine();
+      AudioManager.instance.stopBgm();
+      level = 3;
+      remove(mrPeeps);
+      enemyManager.removeAllEnemies();
+      remove(enemyManager);
+      saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
+          gameDataProvider.currentPoints + bonusPoints);
+      setParallax(2);
+      overlays.add(LevelUpOverlay.id);
     }
 
     super.update(dt);

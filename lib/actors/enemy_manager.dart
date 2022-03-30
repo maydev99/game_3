@@ -19,20 +19,6 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     var score = gameRef.gameDataProvider.currentPoints;
     late int randomIndex;
 
-    /*switch (score) {
-      case >1:
-        randomIndex = _random.nextInt(1);
-        break;
-      case 20:
-        randomIndex = _random.nextInt(2);
-        break;
-      case 50:
-        randomIndex = _random.nextInt(3);
-        break;
-      case 200:
-        randomIndex = _random.nextInt(4);
-        break;
-    }*/
     if (score < 20) {
       randomIndex = _random.nextInt(1);
     } else if (score >= 20 && score < 50) {
@@ -42,8 +28,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     } else {
       randomIndex = _random.nextInt(4);
     }
-    //randomIndex = _random.nextInt(4);
-    //final randomIndex = _random.nextInt(_data.length);
+    
     final enemyData = _data.elementAt(randomIndex);
     final enemy = Enemy(enemyData);
 

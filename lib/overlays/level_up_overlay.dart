@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +16,12 @@ class LevelUpOverlay extends StatefulWidget {
 }
 
 class _LevelUpOverlayState extends State<LevelUpOverlay> {
-  //Variables and functions
+  var box = GetStorage();
+
 
   @override
   Widget build(BuildContext context) {
+    int level = box.read('level');
     var gameRef = widget.gameRef;
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
@@ -36,9 +39,9 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                 direction: Axis.vertical,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  const Text(
-                    'Level 2',
-                    style: TextStyle(
+                  Text(
+                    'Level $level',
+                    style: const TextStyle(
                         fontSize: 60,
                         fontFamily: 'Righteous',
                         color: Colors.yellow),

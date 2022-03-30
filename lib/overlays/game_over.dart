@@ -24,6 +24,7 @@ class _GameOverState extends State<GameOver> {
     var gameRef = widget.gameRef;
     highScore = box.read('high');
 
+
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
       child: Center(
@@ -67,14 +68,15 @@ class _GameOverState extends State<GameOver> {
                     padding: const EdgeInsets.all(8.0),
                     child: MaterialButton(
                       onPressed: () {
+                        int lives = box.read('lives') ?? 5;
+                        int score = box.read('score') ?? 0;
                         gameRef.overlays.remove(GameOver.id);
                         gameRef.resetGame();
-                       // gameRef.gameDataProvider.setLives(5);
-                        //gameRef.gameDataProvider.clearPoints();
+                        gameRef.gameDataProvider.setLives(lives);
+                        gameRef.gameDataProvider.setPoints(score);
                         gameRef.resumeEngine();
                         AudioManager.instance.resumeBgm();
-                        //AudioManager.instance.startBgm('funnysong.mp3');
-                        gameRef.startGamePlay();
+
                       },
                       color: Colors.blue,
                       textColor: Colors.white,
