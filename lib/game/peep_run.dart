@@ -34,6 +34,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     'jump14.wav',
     'underground.mp3',
     'steeldrum.mp3',
+    'level_complete.mp3'
   ];
 
   late MrPeeps mrPeeps;
@@ -64,10 +65,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     );
 
     mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
-
     enemyManager = EnemyManager();
-
-    //add(levelOnePC);
     startGamePlay();
 
     return super.onLoad();
@@ -75,6 +73,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   @override
   void update(double dt) {
+    int index = savedLevel - 1;
     overlays.add(Hud.id);
 
     //Game Over
@@ -91,35 +90,27 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       overlays.add(GameOver.id);
     }
 
-    //Start Level 2 at 100 points
-    if (gameDataProvider.currentPoints == levelData.data[0].endScore) {
-      pauseEngine();
-      AudioManager.instance.stopBgm();
-      level = 2;
-      remove(mrPeeps);
-      enemyManager.removeAllEnemies();
-      remove(enemyManager);
-      saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
-          gameDataProvider.currentPoints + bonusPoints);
-      setParallax(1);
-      overlays.add(LevelUpOverlay.id);
-    }
-
-    //Start Level 3 at 200 points
-    if(gameDataProvider.currentPoints == levelData.data[1].endScore) {
-      pauseEngine();
-      AudioManager.instance.stopBgm();
-      level = 3;
-      remove(mrPeeps);
-      enemyManager.removeAllEnemies();
-      remove(enemyManager);
-      saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
-          gameDataProvider.currentPoints + bonusPoints);
-      setParallax(2);
-      overlays.add(LevelUpOverlay.id);
+    //This handles the level changes
+    if (gameDataProvider.currentPoints == levelData.data[index].endScore) {
+      endLevel(nextLevel: index + 2);
+      AudioManager.instance.playSfx('level_complete.mp3', 1.0);
     }
 
     super.update(dt);
+  }
+
+  void endLevel({required int nextLevel}) {
+    int index = nextLevel - 1;
+    pauseEngine();
+    AudioManager.instance.stopBgm();
+    level = nextLevel;
+    remove(mrPeeps);
+    enemyManager.removeAllEnemies();
+    remove(enemyManager);
+    saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
+        gameDataProvider.currentPoints + bonusPoints);
+    setParallax(index);
+    overlays.add(LevelUpOverlay.id);
   }
 
   @override
@@ -201,5 +192,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     savedLevel = box.read('level') ?? 1;
     savedLives = box.read('lives') ?? 5;
     savedScore = box.read('score') ?? 0;
+    gameDataProvider.setPoints(savedScore);
+    gameDataProvider.setLives(savedLives);
   }
 }
