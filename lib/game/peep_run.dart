@@ -34,7 +34,8 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     'jump14.wav',
     'underground.mp3',
     'steeldrum.mp3',
-    'level_complete.mp3'
+    'level_up.mp3',
+    'chicken_scream.mp3'
   ];
 
   late MrPeeps mrPeeps;
