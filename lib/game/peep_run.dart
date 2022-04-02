@@ -93,7 +93,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     //This handles the level changes
     if (gameDataProvider.currentPoints == levelData.data[index].endScore) {
       endLevel(nextLevel: index + 2);
-      AudioManager.instance.playSfx('level_complete.mp3', 1.0);
+      AudioManager.instance.playSfx('level_up.mp3', 1.0);
     }
 
     super.update(dt);
