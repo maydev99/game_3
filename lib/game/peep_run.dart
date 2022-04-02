@@ -31,8 +31,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   static const _audioAssets = [
     'funnysong.mp3',
-    'jump14.wav',
-    'steeldrum.mp3',
+    'new_jump.mp3',
     'level_up.mp3',
     'chicken_scream.mp3'
   ];

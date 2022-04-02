@@ -16,7 +16,7 @@ class LevelData {
         bg2: 'ocean_2.png',
         bg3: 'puff_clouds.png',
         bg4: 'boardwalk.png',
-        bgm: 'steeldrum.mp3',
+        bgm: 'funnysong.mp3',
         endScore: 200),
     Level(
         levelId: 3,
