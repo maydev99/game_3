@@ -32,7 +32,6 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   static const _audioAssets = [
     'funnysong.mp3',
     'jump14.wav',
-    'underground.mp3',
     'steeldrum.mp3',
     'level_up.mp3',
     'chicken_scream.mp3'
@@ -154,12 +153,12 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void startGamePlay() {
+    AudioManager.instance.stopBgm();
     loadLevelState();
     int index = savedLevel - 1;
     setParallax(index);
     add(parallaxComponent);
     AudioManager.instance.startBgm(levelData.data[index].bgm);
-
     add(mrPeeps);
     mrPeeps.changePriorityWithoutResorting(1);
   }

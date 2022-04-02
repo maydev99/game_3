@@ -24,7 +24,7 @@ class LevelData {
         bg2: 'mountains.png',
         bg3: 'puff_clouds.png',
         bg4: 'grass.png',
-        bgm: 'underground.mp3',
+        bgm: 'funnysong.mp3',
         endScore: 300),
     Level(
         levelId: 4,
