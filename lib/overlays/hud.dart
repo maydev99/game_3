@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:layout/audio/audio_manager.dart';
+import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
-import 'package:layout/overlays/game_start_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:layout/game/game_data_provider.dart';
-import '../audio/audio_manager.dart';
 
 class Hud extends StatefulWidget {
   static const id = 'Hud';
@@ -42,7 +39,7 @@ class _HudState extends State<Hud> {
           children: [
             const ScoreDisplay(),
             pauseButton(gameRef),
-            musicButton(),
+           //musicButton(),
             const LivesDisplay(),
             Text('High: $highScore',
             style: const TextStyle(
@@ -55,7 +52,7 @@ class _HudState extends State<Hud> {
     );
   }
 
-  IconButton musicButton() {
+ /* IconButton musicButton() {
     return IconButton(
         onPressed: () {
           setState(() {
@@ -84,7 +81,7 @@ class _HudState extends State<Hud> {
                 Icons.music_off,
                 color: Colors.red,
               ));
-  }
+  }*/
 
   TextButton pauseButton(PeepGame gameRef) {
     return TextButton(
@@ -93,11 +90,11 @@ class _HudState extends State<Hud> {
             gameRef.pauseEngine();
             gameRef.overlays.remove(Hud.id);
             gameRef.overlays.add(PauseOverlay.id);
-            AudioManager.instance.pauseBgm();
+            //AudioManager.instance.pauseBgm();
           } else {
             gameRef.resumeEngine();
             if(hasMusicOn) {
-              AudioManager.instance.resumeBgm();
+            //  AudioManager.instance.resumeBgm();
             }
 
           }

@@ -30,7 +30,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   var levelData = LevelData();
 
   static const _audioAssets = [
-    'funnysong.mp3',
+    //q'funnysong.mp3',
     'new_jump.mp3',
     'level_up.mp3',
     'chicken_scream.mp3'
@@ -79,7 +79,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     if (gameDataProvider.currentLives <= 0) {
       overlays.remove(Hud.id);
       pauseEngine();
-      AudioManager.instance.pauseBgm();
+      //AudioManager.instance.pauseBgm();
       var score = gameDataProvider.currentPoints;
       var highScore = box.read('high');
       highScore ??= 0;
@@ -101,7 +101,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   void endLevel({required int nextLevel}) {
     int index = nextLevel - 1;
     pauseEngine();
-    AudioManager.instance.stopBgm();
+    //AudioManager.instance.stopBgm();
     level = nextLevel;
     remove(mrPeeps);
     enemyManager.removeAllEnemies();
@@ -135,7 +135,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
         if (overlays.isActive(Hud.id)) {
           overlays.remove(Hud.id);
           overlays.add(PauseOverlay.id);
-          AudioManager.instance.pauseBgm();
+         // AudioManager.instance.pauseBgm();
         }
 
         pauseEngine();
@@ -152,12 +152,12 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void startGamePlay() {
-    AudioManager.instance.stopBgm();
+    //AudioManager.instance.stopBgm();
     loadLevelState();
     int index = savedLevel - 1;
     setParallax(index);
     add(parallaxComponent);
-    AudioManager.instance.startBgm(levelData.data[index].bgm);
+    //AudioManager.instance.startBgm(levelData.data[index].bgm);
     add(mrPeeps);
     mrPeeps.changePriorityWithoutResorting(1);
   }

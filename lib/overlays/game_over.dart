@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +74,7 @@ class _GameOverState extends State<GameOver> {
                         gameRef.gameDataProvider.setLives(lives);
                         gameRef.gameDataProvider.setPoints(score);
                         gameRef.resumeEngine();
-                        AudioManager.instance.resumeBgm();
+                        //AudioManager.instance.resumeBgm();
 
                       },
                       color: Colors.blue,

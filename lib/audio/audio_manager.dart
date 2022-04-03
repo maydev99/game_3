@@ -12,7 +12,7 @@ class AudioManager {
     await FlameAudio.audioCache.loadAll(files);
   }
 
-  void startBgm(String filename) {
+/*  void startBgm(String filename) {
     FlameAudio.bgm.play(filename, volume: 0.4);
   }
 
@@ -26,7 +26,7 @@ class AudioManager {
 
   void stopBgm() {
     FlameAudio.bgm.stop();
-  }
+  }*/
 
   void playSfx(String filename, double volume) {
     FlameAudio.audioCache.play(filename, volume: volume);

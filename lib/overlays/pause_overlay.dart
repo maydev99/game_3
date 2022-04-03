@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/hud.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +47,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                       gameRef.overlays.remove(PauseOverlay.id);
                       gameRef.overlays.add(Hud.id);
                       gameRef.resumeEngine();
-                      AudioManager.instance.resumeBgm();
+                      //AudioManager.instance.resumeBgm();
 
                     },
                     color: Colors.blue,
