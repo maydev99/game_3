@@ -90,7 +90,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
   void jump() {
     if (!isJumping) {
       velocity += Vector2(0, -400);
-      AudioManager.instance.playSfx('new_jump.mp3', 1);
+      AudioManager.instance.playSfx('sfx-boing4.mp3', 0.1);
       isJumping = true;
     }
   }

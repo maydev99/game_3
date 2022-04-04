@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/actors/enemy.dart';
 import 'package:layout/actors/enemy_data.dart';
 import 'package:layout/game/peep_run.dart';
@@ -10,12 +11,14 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
 
   final Random _random = Random();
   final Timer _timer = Timer(2, repeat: true);
+  var box = GetStorage();
 
   EnemyManager() {
     _timer.onTick = spawnRandomEnemy;
   }
 
   void spawnRandomEnemy() {
+
     var score = gameRef.gameDataProvider.currentPoints;
     late int randomIndex;
 
@@ -28,7 +31,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     } else {
       randomIndex = _random.nextInt(4);
     }
-    
+
     final enemyData = _data.elementAt(randomIndex);
     final enemy = Enemy(enemyData);
 
@@ -59,6 +62,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
     if (_data.isEmpty) {
       _data.addAll([
         EnemyData(
+            name: 'Tort',
             image: gameRef.images.fromCache('tort.png'),
             nFrames: 3,
             stepTime: 0.1,
@@ -66,6 +70,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
             speedX: 180,
             canFly: false),
         EnemyData(
+            name: 'Bird',
             image: gameRef.images.fromCache('bird.png'),
             nFrames: 3,
             stepTime: 0.1,
@@ -73,6 +78,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
             speedX: 200,
             canFly: true),
         EnemyData(
+            name: 'Dog',
             image: gameRef.images.fromCache('dog.png'),
             nFrames: 4,
             stepTime: 0.1,
@@ -80,6 +86,7 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
             speedX: 220,
             canFly: false),
         EnemyData(
+            name: 'Rocket_Tort',
             image: gameRef.images.fromCache('rocket_tort.png'),
             nFrames: 3,
             stepTime: 0.1,

@@ -8,7 +8,7 @@ class LevelData {
         bg2: 'mountains.png',
         bg3: 'town.png',
         bg4: 'grass.png',
-        bgm: 'funnysong.mp3',
+        bgm: 'jazzy.mp3',
         endScore: 100),
     Level(
         levelId: 2,
@@ -16,7 +16,7 @@ class LevelData {
         bg2: 'ocean_2.png',
         bg3: 'puff_clouds.png',
         bg4: 'boardwalk.png',
-        bgm: 'funnysong.mp3',
+        bgm: 'jazzy.mp3',
         endScore: 200),
     Level(
         levelId: 3,
@@ -32,7 +32,7 @@ class LevelData {
         bg2: 'mesas.png',
         bg3: 'sajuaros.png',
         bg4: 'dirt_road.png',
-        bgm: 'funnysong.mp3',
+        bgm: 'jazzy.mp3',
         endScore: 1000) //Change endScore after adding new level
   ];
 }
