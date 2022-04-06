@@ -4,13 +4,21 @@ import 'package:flame/components.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:layout/actors/enemy.dart';
 import 'package:layout/actors/enemy_data.dart';
+import 'package:layout/actors/enemy_map.dart';
 import 'package:layout/game/peep_run.dart';
+import 'package:layout/level/level_data.dart';
 
 class EnemyManager extends Component with HasGameRef<PeepGame> {
   final List<EnemyData> _data = [];
+  final List<EnemyData> enemyDataList = [];
+  List<String> levelEnemies = [];
 
   final Random _random = Random();
   final Timer _timer = Timer(2, repeat: true);
+  var levelData = LevelData();
+  var enemyMap = EnemyMap();
+  late int level;
+  late int index;
   var box = GetStorage();
 
   EnemyManager() {
@@ -18,19 +26,10 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
   }
 
   void spawnRandomEnemy() {
+    levelEnemies.clear();
+    enemyDataList.clear();
 
-    var score = gameRef.gameDataProvider.currentPoints;
-    late int randomIndex;
-
-    if (score < 20) {
-      randomIndex = _random.nextInt(1);
-    } else if (score >= 20 && score < 50) {
-      randomIndex = _random.nextInt(2);
-    } else if (score >= 50 && score < 200) {
-      randomIndex = _random.nextInt(3);
-    } else {
-      randomIndex = _random.nextInt(4);
-    }
+    final randomIndex = _random.nextInt(_data.length);
 
     final enemyData = _data.elementAt(randomIndex);
     final enemy = Enemy(enemyData);
@@ -58,43 +57,36 @@ class EnemyManager extends Component with HasGameRef<PeepGame> {
   @override
   void onMount() {
     shouldRemove = false;
+    level = box.read('level') ?? 1;
+    index = level - 1;
 
-    if (_data.isEmpty) {
-      _data.addAll([
-        EnemyData(
-            name: 'Tort',
-            image: gameRef.images.fromCache('tort.png'),
-            nFrames: 3,
-            stepTime: 0.1,
-            textureSize: Vector2(256, 256),
-            speedX: 180,
-            canFly: false),
-        EnemyData(
-            name: 'Bird',
-            image: gameRef.images.fromCache('bird.png'),
-            nFrames: 3,
-            stepTime: 0.1,
-            textureSize: Vector2(256, 256),
-            speedX: 200,
-            canFly: true),
-        EnemyData(
-            name: 'Dog',
-            image: gameRef.images.fromCache('dog.png'),
-            nFrames: 4,
-            stepTime: 0.1,
-            textureSize: Vector2(256, 256),
-            speedX: 220,
-            canFly: false),
-        EnemyData(
-            name: 'Rocket_Tort',
-            image: gameRef.images.fromCache('rocket_tort.png'),
-            nFrames: 3,
-            stepTime: 0.1,
-            textureSize: Vector2(256, 256),
-            speedX: 300,
-            canFly: false)
-      ]);
+    levelEnemies.addAll(levelData.data[index].enemies);
+
+    for (int i = 0; i < levelEnemies.length; i++) {
+      String enemyName = levelEnemies[i];
+      var enemyIndex =
+          enemyMap.data2.indexWhere((element) => element.name == enemyName);
+      var imageFileName = enemyMap.data2[enemyIndex].imageFileName;
+      var nFrames = enemyMap.data2[enemyIndex].nFrames;
+      var stepTime = enemyMap.data2[enemyIndex].stepTime;
+      var textureSize = enemyMap.data2[enemyIndex].textureSize;
+      var speedX = enemyMap.data2[enemyIndex].speedX;
+      var canFly = enemyMap.data2[enemyIndex].canFly;
+
+
+      var newEnemy = EnemyData(
+          name: enemyName,
+          image: gameRef.images.fromCache(imageFileName),
+          nFrames: nFrames,
+          stepTime: stepTime,
+          textureSize: textureSize,
+          speedX: speedX,
+          canFly: canFly);
+
+      enemyDataList.add(newEnemy);
     }
+    _data.addAll(enemyDataList);
+
     _timer.start();
     super.onMount();
   }

@@ -6,6 +6,7 @@ class Level {
   String bg4;
   String bgm;
   int endScore;
+  List<String> enemies;
 
   Level(
       {required this.levelId,
@@ -14,5 +15,6 @@ class Level {
       required this.bg3,
       required this.bg4,
       required this.bgm,
-      required this.endScore});
+      required this.endScore,
+      required this.enemies});
 }

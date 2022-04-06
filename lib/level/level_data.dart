@@ -9,7 +9,11 @@ class LevelData {
         bg3: 'town.png',
         bg4: 'grass.png',
         bgm: 'jazzy.mp3',
-        endScore: 100),
+        endScore: 10,
+        enemies: [
+          'Tort',
+          'Bird',
+        ]),
     Level(
         levelId: 2,
         bg1: 'sunset.png',
@@ -17,7 +21,8 @@ class LevelData {
         bg3: 'puff_clouds.png',
         bg4: 'boardwalk.png',
         bgm: 'jazzy.mp3',
-        endScore: 200),
+        endScore: 45,
+        enemies: ['Tort', 'Bird', 'Dog']),
     Level(
         levelId: 3,
         bg1: 'sunset.png',
@@ -25,7 +30,8 @@ class LevelData {
         bg3: 'puff_clouds.png',
         bg4: 'grass.png',
         bgm: 'funnysong.mp3',
-        endScore: 300),
+        endScore: 80,
+        enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort']),
     Level(
         levelId: 4,
         bg1: 'desert.png',
@@ -33,6 +39,20 @@ class LevelData {
         bg3: 'sajuaros.png',
         bg4: 'dirt_road.png',
         bgm: 'jazzy.mp3',
-        endScore: 1000) //Change endScore after adding new level
+        endScore: 115,
+        enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort']),
+    Level(
+        levelId: 5,
+        bg1: 'sunset.png',
+        bg2: 'mesas.png',
+        bg3: 'ocean_2.png',
+        bg4: 'grass.png',
+        bgm: 'funnysong.mp3',
+        endScore: 1000,
+        enemies: [
+          'Bird',
+          'Dog',
+          'Rocket_Tort'
+        ]) //Change endScore after adding new level
   ];
 }
