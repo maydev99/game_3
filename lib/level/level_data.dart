@@ -21,7 +21,7 @@ class LevelData {
         bg3: 'puff_clouds.png',
         bg4: 'boardwalk.png',
         bgm: 'jazzy.mp3',
-        endScore: 45,
+        endScore: 200,
         enemies: ['Tort', 'Bird', 'Dog']),
     Level(
         levelId: 3,
@@ -30,7 +30,7 @@ class LevelData {
         bg3: 'puff_clouds.png',
         bg4: 'grass.png',
         bgm: 'funnysong.mp3',
-        endScore: 80,
+        endScore: 300,
         enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort']),
     Level(
         levelId: 4,
@@ -39,7 +39,7 @@ class LevelData {
         bg3: 'sajuaros.png',
         bg4: 'dirt_road.png',
         bgm: 'jazzy.mp3',
-        endScore: 115,
+        endScore: 400, 
         enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort']),
     Level(
         levelId: 5,

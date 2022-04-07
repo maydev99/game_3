@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
+import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
-import 'package:layout/overlays/game_start_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:layout/game/game_data_provider.dart';
+
 import '../audio/audio_manager.dart';
 
 class Hud extends StatefulWidget {
   static const id = 'Hud';
   final PeepGame gameRef;
-
-
-  // final GameDataProvider gameDataProvider = GameDataProvider();
 
   const Hud({Key? key, required this.gameRef}) : super(key: key);
 
@@ -23,15 +20,18 @@ class Hud extends StatefulWidget {
 
 class _HudState extends State<Hud> {
   bool isPaused = false;
+
   bool hasMusicOn = true;
   var box = GetStorage();
 
+  late bool musicOn;
 
   @override
   Widget build(BuildContext context) {
     var gameRef = widget.gameRef;
     var highScore = box.read('high');
     highScore ??= 0;
+
 
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
@@ -44,11 +44,10 @@ class _HudState extends State<Hud> {
             pauseButton(gameRef),
             musicButton(),
             const LivesDisplay(),
-            Text('High: $highScore',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 22
-            ),)
+            Text(
+              'High: $highScore',
+              style: const TextStyle(color: Colors.white, fontSize: 22),
+            )
           ],
         ),
       ),
@@ -89,17 +88,16 @@ class _HudState extends State<Hud> {
   TextButton pauseButton(PeepGame gameRef) {
     return TextButton(
         onPressed: () {
-          if (!isPaused)  {
+          if (!isPaused) {
             gameRef.pauseEngine();
             gameRef.overlays.remove(Hud.id);
             gameRef.overlays.add(PauseOverlay.id);
             AudioManager.instance.pauseBgm();
           } else {
             gameRef.resumeEngine();
-            if(hasMusicOn) {
+            if (musicOn) {
               AudioManager.instance.resumeBgm();
             }
-
           }
 
           setState(() {
@@ -129,9 +127,11 @@ class LivesDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset('assets/images/peep_life.png',
-        width: 35,
-        height: 35,),
+        Image.asset(
+          'assets/images/peep_life.png',
+          width: 35,
+          height: 35,
+        ),
         Selector<GameDataProvider, int>(
           selector: (_, gameDataProvider) => gameDataProvider.currentLives,
           builder: (_, currentLives, __) {

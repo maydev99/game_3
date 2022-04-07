@@ -5,6 +5,7 @@ import 'package:layout/overlays/game_start_overlay.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/level_up_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
+import 'package:layout/overlays/settings_overlay.dart';
 
 import '../overlays/hud.dart';
 
@@ -31,6 +32,7 @@ class GameScreen extends StatelessWidget {
                 GameStart.id: (_, PeepGame gameRef) => GameStart(gameRef: _peepGame),
                 PauseOverlay.id: (_, PeepGame gameRef) => PauseOverlay(gameRef: _peepGame),
                 LevelUpOverlay.id: (_,PeepGame gameRef) => LevelUpOverlay(gameRef: _peepGame),
+                SettingsOverlay.id: (_,PeepGame gameRef) => SettingsOverlay(gameRef: _peepGame),
               },
               initialActiveOverlays: const [GameStart.id],
               game: _peepGame,
