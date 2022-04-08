@@ -8,8 +8,8 @@ class LevelData {
         bg2: 'mountains.png',
         bg3: 'town.png',
         bg4: 'grass.png',
-        bgm: 'jazzy.mp3',
-        endScore: 10,
+        bgm: 'funk.mp3',
+        endScore: 100,
         enemies: [
           'Tort',
           'Bird',
@@ -20,7 +20,7 @@ class LevelData {
         bg2: 'ocean_2.png',
         bg3: 'puff_clouds.png',
         bg4: 'boardwalk.png',
-        bgm: 'jazzy.mp3',
+        bgm: 'jazzy3.mp3',
         endScore: 200,
         enemies: ['Tort', 'Bird', 'Dog']),
     Level(
@@ -38,7 +38,7 @@ class LevelData {
         bg2: 'mesas.png',
         bg3: 'sajuaros.png',
         bg4: 'dirt_road.png',
-        bgm: 'jazzy.mp3',
+        bgm: 'funk.mp3',
         endScore: 400, 
         enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort']),
     Level(
@@ -47,7 +47,7 @@ class LevelData {
         bg2: 'mesas.png',
         bg3: 'ocean_2.png',
         bg4: 'grass.png',
-        bgm: 'funnysong.mp3',
+        bgm: 'jazzy3.mp3',
         endScore: 1000,
         enemies: [
           'Bird',
