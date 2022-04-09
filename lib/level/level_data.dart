@@ -13,6 +13,9 @@ class LevelData {
         enemies: [
           'Tort',
           'Bird',
+        ],
+        artifacts: [
+          'Magic_Butterfly'
         ]),
     Level(
         levelId: 2,
@@ -22,7 +25,10 @@ class LevelData {
         bg4: 'boardwalk.png',
         bgm: 'jazzy3.mp3',
         endScore: 200,
-        enemies: ['Tort', 'Bird', 'Dog']),
+        enemies: ['Tort', 'Bird', 'Dog'],
+        artifacts: [
+          'Magic_Butterfly'
+        ]),
     Level(
         levelId: 3,
         bg1: 'sunset.png',
@@ -31,7 +37,10 @@ class LevelData {
         bg4: 'grass.png',
         bgm: 'funnysong.mp3',
         endScore: 300,
-        enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort']),
+        enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort'],
+        artifacts: [
+          'Magic_Butterfly'
+        ]),
     Level(
         levelId: 4,
         bg1: 'desert.png',
@@ -39,8 +48,11 @@ class LevelData {
         bg3: 'sajuaros.png',
         bg4: 'dirt_road.png',
         bgm: 'funk.mp3',
-        endScore: 400, 
-        enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort']),
+        endScore: 400,
+        enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort'],
+        artifacts: [
+          'Magic_Butterfly'
+        ]),
     Level(
         levelId: 5,
         bg1: 'sunset.png',
@@ -52,7 +64,10 @@ class LevelData {
         enemies: [
           'Bird',
           'Dog',
-          'Rocket_Tort'
+          'Rocket_Tort',
+        ],
+        artifacts: [
+          'Magic_Butterfly'
         ]) //Change endScore after adding new level
   ];
 }

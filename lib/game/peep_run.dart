@@ -4,6 +4,7 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:layout/actors/artifact_manager.dart';
 import 'package:layout/actors/enemy_manager.dart';
 import 'package:layout/actors/mr_peep.dart';
 import 'package:layout/audio/audio_manager.dart';
@@ -17,6 +18,7 @@ import '../overlays/hud.dart';
 
 class PeepGame extends FlameGame with TapDetector, HasCollidables {
   late EnemyManager enemyManager;
+  late ArtifactManager artifactManager;
   late GameDataProvider gameDataProvider;
   final box = GetStorage();
   late ParallaxComponent parallaxComponent;
@@ -31,7 +33,6 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   static const _audioAssets = [
     'funnysong.mp3',
-    'jazzy.mp3',
     'jazzy3.mp3',
     'sfx-boing4.mp3',
     'level_up.mp3',
@@ -49,6 +50,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     await images.load('bird.png');
     await images.load('dog.png');
     await images.load('rocket_tort.png');
+    await images.load('magic_butterfly.png');
 
     await AudioManager.instance.init(_audioAssets);
 
@@ -68,6 +70,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
     enemyManager = EnemyManager();
+    artifactManager = ArtifactManager();
     startGamePlay();
 
     return super.onLoad();
@@ -182,6 +185,11 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     // overlays.add(Hud.id);
     add(enemyManager);
     enemyManager.changePriorityWithoutResorting(2);
+  }
+
+  void spawnArtifacts() {
+    add(artifactManager);
+    artifactManager.changePriorityWithoutResorting(3);
   }
 
   void saveLevelState(int level, int lives, int score) {

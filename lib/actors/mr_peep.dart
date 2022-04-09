@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
+import 'package:layout/actors/artifact_model.dart';
 import 'package:layout/actors/enemy.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
@@ -67,6 +68,11 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     if ((other is Enemy) && (!isHit)) {
       hit();
     }
+
+    if ((other is ArtifactModel) && (!isHit)) {
+      print('Encountered Artifact');
+    }
+
     super.onCollision(intersectionPoints, other);
   }
 

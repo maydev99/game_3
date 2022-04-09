@@ -4,7 +4,6 @@ import 'package:layout/game/peep_run.dart';
 import 'enemy_data2.dart';
 
 class EnemyMap {
-
   var gameRef = PeepGame();
 
   var data2 = [
@@ -39,6 +38,7 @@ class EnemyMap {
         stepTime: 0.1,
         textureSize: Vector2(256, 256),
         speedX: 300,
-        canFly: false)
+        canFly: false),
+
   ];
 }

@@ -52,6 +52,7 @@ class _GameStartState extends State<GameStart> {
                       gameRef.loadLevelState();
                       gameRef.startGamePlay();
                       gameRef.spawnEnemies();
+                      gameRef.spawnArtifacts();
 
                     },
                     color: Colors.blue,
