@@ -101,7 +101,8 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     _hitTimer.start();
     current = PeepAnimationStates.hit;
     if (isHit) {
-      AudioManager.instance.playSfx('chicken_scream.mp3', 0.4);
+      //AudioManager.instance.playSfx('chicken_scream.mp3', 0.4);
+      AudioManager.instance.hitSound;
 
       gameRef.gameDataProvider.removeLife();
     }

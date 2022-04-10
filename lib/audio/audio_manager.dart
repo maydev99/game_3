@@ -3,7 +3,8 @@ import 'package:flame_audio/flame_audio.dart';
 
 class AudioManager {
   AudioManager._internal();
-  late AudioPool pool;
+  late AudioPool jumpSound;
+  late AudioPool hitSound;
 
   static final AudioManager _instance = AudioManager._internal();
 
@@ -11,7 +12,8 @@ class AudioManager {
 
   Future<void> init(List<String> files) async {
     FlameAudio.bgm.initialize();
-    pool = await AudioPool.create('boing.mp3', minPlayers: 3, maxPlayers: 4);
+    jumpSound = await AudioPool.create('boing.mp3', minPlayers: 3, maxPlayers: 4);
+    hitSound = await AudioPool.create('chicken_scream.mp3', minPlayers: 2, maxPlayers: 3);
 
     await FlameAudio.audioCache.loadAll(files);
   }
@@ -33,7 +35,12 @@ class AudioManager {
   }
 
   void playJumpSound() {
-    pool.start(volume: 1);
+    jumpSound.start(volume: 1);
+  }
+
+  void playHitSound() {
+    print('HIT!');
+    hitSound.start(volume: 1);
   }
 
   void playSfx(String filename, double volume) {
