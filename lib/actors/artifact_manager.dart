@@ -1,3 +1,4 @@
+/*
 import 'dart:math';
 
 import 'package:flame/components.dart';
@@ -88,3 +89,4 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
     }
   }
 }
+*/

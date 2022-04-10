@@ -18,7 +18,7 @@ import '../overlays/hud.dart';
 
 class PeepGame extends FlameGame with TapDetector, HasCollidables {
   late EnemyManager enemyManager;
-  late ArtifactManager artifactManager;
+  //late ArtifactManager artifactManager;
   late GameDataProvider gameDataProvider;
   final box = GetStorage();
   late ParallaxComponent parallaxComponent;
@@ -70,7 +70,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
     enemyManager = EnemyManager();
-    artifactManager = ArtifactManager();
+   // artifactManager = ArtifactManager();
     startGamePlay();
 
     return super.onLoad();
@@ -187,10 +187,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     enemyManager.changePriorityWithoutResorting(2);
   }
 
-  void spawnArtifacts() {
-    add(artifactManager);
-    artifactManager.changePriorityWithoutResorting(3);
-  }
+
 
   void saveLevelState(int level, int lives, int score) {
     box.write('level', level);
