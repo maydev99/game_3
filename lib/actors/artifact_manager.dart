@@ -1,43 +1,55 @@
-/*
+
 import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:layout/actors/artifact.dart';
-import 'package:layout/actors/artifact_list.dart';
-import 'package:layout/actors/artifact_model.dart';
 import 'package:layout/game/peep_run.dart';
+import 'package:layout/level/level_data.dart';
 
-import '../level/level_data.dart';
+import 'artifact_list.dart';
+import 'artifact_model.dart';
 
 class ArtifactManager extends Component with HasGameRef<PeepGame> {
   final List<ArtifactModel> _data = [];
-  final List<String> levelArtifacts = [];
+  List<String> levelArtifacts = [];
   final List<ArtifactModel> artifactDataList = [];
   final Random _random = Random();
   var artifactList = ArtifactList();
   var levelData = LevelData();
-  final Timer _timer = Timer(10, repeat: true);
-  late int level;
+  final Timer _timer = Timer(20, repeat: true);
+  int level = 0;
   late int index;
   var box = GetStorage();
 
+
   ArtifactManager() {
-    _timer.onTick = spawnRandomArtifact();
+    _timer.onTick = spawnRandomArtifact;
   }
 
-  spawnRandomArtifact() {
-    final randomIndex = _random.nextInt(_data.length);
+  void spawnRandomArtifact() {
+    levelArtifacts.clear();
+    artifactDataList.clear();
+
+
+    var randomIndex = _random.nextInt(_data.length);
+
+    //print('ARTDATA: ${_data.elementAt(randomIndex).imageFileName.toString()}');
+
     final artifactData = _data.elementAt(randomIndex);
-    final artifact = Artifact(artifactData);
+    print('ARTDATA ${artifactData.altitude}');
+    final myArtifact = Artifact(artifactData);
 
-    artifact.anchor = Anchor.bottomLeft;
-    artifact.position = Vector2(
+    myArtifact.anchor = Anchor.bottomLeft;
+    myArtifact.position = Vector2(
         gameRef.size.x + 32,
-        gameRef.size.y - artifactData.altitude);
+        gameRef.size.y - 1);
 
-    artifact.size = artifactData.textureSize;
-    gameRef.add(artifact);
+    myArtifact.position.y = 100;
+
+
+    myArtifact.size = artifactData.textureSize;
+    //add(myArtifact);
   }
 
   @override
@@ -45,7 +57,9 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
     shouldRemove = false;
     level = box.read('level') ?? 1;
     index = level - 1;
-    levelArtifacts.addAll(levelData.data[index].artifacts);
+
+    levelArtifacts = levelData.data[index].artifacts;
+    // print(levelArtifacts.toString());
 
     for (int i = 0; i < levelArtifacts.length; i++) {
       String artifactName = levelArtifacts[i];
@@ -68,10 +82,12 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
           altitude: altitude);
 
       artifactDataList.add(newArtifact);
+      //print('ART Added**');
 
     }
 
     _data.addAll(artifactDataList);
+    print('DL2: ${_data.length}');
     _timer.start();
     super.onMount();
   }
@@ -89,4 +105,3 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
     }
   }
 }
-*/

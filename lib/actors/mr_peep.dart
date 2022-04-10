@@ -70,7 +70,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     }
 
     if ((other is ArtifactModel) && (!isHit)) {
-      print('Encountered Artifact');
+      print('Hit Artifact');
     }
 
     super.onCollision(intersectionPoints, other);
@@ -96,7 +96,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
   void jump() {
     if (!isJumping) {
       velocity += Vector2(0, -400);
-      AudioManager.instance.playSfx('sfx-boing4.mp3', 0.1);
+      AudioManager.instance.playJumpSound();
       isJumping = true;
     }
   }
@@ -106,8 +106,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     _hitTimer.start();
     current = PeepAnimationStates.hit;
     if (isHit) {
-      AudioManager.instance.playSfx('chicken_scream.mp3', 0.4);
-
+      AudioManager.instance.playHitSound();
       gameRef.gameDataProvider.removeLife();
     }
   }
