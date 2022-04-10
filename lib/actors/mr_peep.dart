@@ -91,7 +91,6 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     if (!isJumping) {
       velocity += Vector2(0, -400);
       AudioManager.instance.playJumpSound();
-      //AudioManager.instance.playSfx('boing.mp3', 0.1);
       isJumping = true;
     }
   }
@@ -101,8 +100,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     _hitTimer.start();
     current = PeepAnimationStates.hit;
     if (isHit) {
-      //AudioManager.instance.playSfx('chicken_scream.mp3', 0.4);
-      AudioManager.instance.hitSound;
+      AudioManager.instance.playHitSound();
 
       gameRef.gameDataProvider.removeLife();
     }

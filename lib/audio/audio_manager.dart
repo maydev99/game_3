@@ -35,12 +35,11 @@ class AudioManager {
   }
 
   void playJumpSound() {
-    jumpSound.start(volume: 1);
+    jumpSound.start(volume: 0.4);
   }
 
   void playHitSound() {
-    print('HIT!');
-    hitSound.start(volume: 1);
+    hitSound.start(volume: 0.4);
   }
 
   void playSfx(String filename, double volume) {
