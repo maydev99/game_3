@@ -35,7 +35,8 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     'funnysong.mp3',
     'jazzy3.mp3',
     'level_up.mp3',
-    'funk.mp3'
+    'funk.mp3',
+    'coin_sound.mp3',
   ];
 
   late MrPeeps mrPeeps;
@@ -49,6 +50,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     await images.load('dog.png');
     await images.load('rocket_tort.png');
     await images.load('magic_butterfly.png');
+    await images.load('coin_ten.png');
 
     await AudioManager.instance.init(_audioAssets);
 
@@ -94,7 +96,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     }
 
     //This handles the level changes
-    if (gameDataProvider.currentPoints == levelData.data[index].endScore) {
+    if (gameDataProvider.currentPoints >= levelData.data[index].endScore) {
       endLevel(nextLevel: index + 2);
       AudioManager.instance.playSfx('level_up.mp3', 1.0);
     }

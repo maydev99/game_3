@@ -1,11 +1,14 @@
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
-import 'package:layout/actors/artifact_model.dart';
+import 'package:layout/actors/artifact_model2.dart';
 import 'package:layout/actors/enemy.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
+
+import 'artifact.dart';
+import 'artifact_model.dart';
 
 enum PeepAnimationStates {
   run,
@@ -69,8 +72,8 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
       hit();
     }
 
-    if ((other is ArtifactModel) && (!isHit)) {
-      print('Hit Artifact');
+    if ((other is Artifact) && (!isHit)) {
+      bonus();
     }
 
     super.onCollision(intersectionPoints, other);
@@ -108,6 +111,15 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     if (isHit) {
       AudioManager.instance.playHitSound();
       gameRef.gameDataProvider.removeLife();
+    }
+  }
+
+  void bonus() {
+    isHit = true;
+    _hitTimer.start();
+    if(isHit) {
+      AudioManager.instance.playSfx('coin_sound.mp3', 0.5);
+      gameRef.gameDataProvider.addBonusPoints(10);
     }
   }
 }

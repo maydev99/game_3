@@ -15,7 +15,7 @@ class LevelData {
           'Bird',
         ],
         artifacts: [
-          'Magic_Butterfly'
+          'Coin_Ten'
         ]),
     Level(
         levelId: 2,

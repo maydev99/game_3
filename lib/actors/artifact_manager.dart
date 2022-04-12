@@ -9,6 +9,7 @@ import 'package:layout/level/level_data.dart';
 
 import 'artifact_list.dart';
 import 'artifact_model.dart';
+import 'artifact_model2.dart';
 
 class ArtifactManager extends Component with HasGameRef<PeepGame> {
   final List<ArtifactModel> _data = [];
@@ -45,11 +46,11 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
         gameRef.size.x + 32,
         gameRef.size.y - 1);
 
-    myArtifact.position.y = 100;
+    myArtifact.position.y = gameRef.size.y - 200;
 
 
     myArtifact.size = artifactData.textureSize;
-    //add(myArtifact);
+    add(myArtifact);
   }
 
   @override
@@ -71,10 +72,11 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
       var textureSize = artifactList.data[artifactIndex].textureSize;
       var speedX = artifactList.data[artifactIndex].speedX;
       var altitude = artifactList.data[artifactIndex].altitude;
+      //var image = artifactList.data[artifactIndex].image;
 
       var newArtifact = ArtifactModel(
           name: artifactName,
-          imageFileName: imageFileName,
+          image: gameRef.images.fromCache(imageFileName),
           nFrames: nFrames,
           stepTime: stepTime,
           textureSize: textureSize,

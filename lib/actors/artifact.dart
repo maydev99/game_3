@@ -1,17 +1,19 @@
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
-import 'package:layout/actors/artifact_model.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
+
+import 'artifact_model.dart';
 
 class Artifact extends SpriteAnimationComponent with HasHitboxes, Collidable, HasGameRef<PeepGame> {
 
   late final ArtifactModel artifactModel;
   GameDataProvider gameDataProvider = GameDataProvider();
 
-  Artifact(this.artifactModel) {
+  Artifact(this.artifactModel)  {
+    //Image image = Flame.images.fromCache(artifactModel.imageFileName);
     animation = SpriteAnimation.fromFrameData(
-      gameRef.images.fromCache(artifactModel.imageFileName),
+      artifactModel.image,
       SpriteAnimationData.sequenced(
           amount: artifactModel.nFrames,
           stepTime: artifactModel.stepTime,
