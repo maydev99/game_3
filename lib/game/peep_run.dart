@@ -112,6 +112,8 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     remove(mrPeeps);
     enemyManager.removeAllEnemies();
     remove(enemyManager);
+    artifactManager.removeAllArtifacts();
+    remove(artifactManager);
     saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
         gameDataProvider.currentPoints + bonusPoints);
     setParallax(index);

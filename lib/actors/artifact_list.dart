@@ -19,7 +19,7 @@ class ArtifactList {
     ArtifactModel2(
         name: 'Coin_Ten',
         imageFileName: 'coin_ten.png',
-        nFrames: 7,
+        nFrames: 2,
         stepTime: 0.1,
         textureSize: Vector2(256, 256),
         speedX: 180,

@@ -61,6 +61,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       gameRef.startGamePlay();
                       gameRef.resumeEngine();
                       gameRef.spawnEnemies();
+                      gameRef.spawnArtifacts();
                       gameRef.resumeEngine();
 
 
