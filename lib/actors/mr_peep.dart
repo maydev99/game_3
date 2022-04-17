@@ -1,14 +1,13 @@
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
-import 'package:layout/actors/artifact_model2.dart';
+import 'package:flutter/services.dart';
 import 'package:layout/actors/enemy.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
 
 import 'artifact.dart';
-import 'artifact_model.dart';
 
 enum PeepAnimationStates {
   run,
@@ -99,6 +98,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
   void jump() {
     if (!isJumping) {
       velocity += Vector2(0, -400);
+      HapticFeedback.mediumImpact();
       AudioManager.instance.playJumpSound();
       isJumping = true;
     }
@@ -109,6 +109,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     _hitTimer.start();
     current = PeepAnimationStates.hit;
     if (isHit) {
+      HapticFeedback.heavyImpact();
       AudioManager.instance.playHitSound();
       gameRef.gameDataProvider.removeLife();
     }

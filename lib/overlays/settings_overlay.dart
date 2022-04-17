@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/game_start_overlay.dart';
+import 'package:layout/overlays/pause_overlay.dart';
 import 'package:provider/provider.dart';
 
 class SettingsOverlay extends StatefulWidget {
@@ -64,7 +65,7 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                   MaterialButton(
                     onPressed: () {
                       gameRef.overlays.remove(SettingsOverlay.id);
-                      gameRef.overlays.add(GameStart.id);
+                      gameRef.overlays.add(PauseOverlay.id);
 
                     },
                     color: Colors.blue,

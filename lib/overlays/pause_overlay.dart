@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/hud.dart';
+import 'package:layout/overlays/settings_overlay.dart';
 import 'package:provider/provider.dart';
 
 class PauseOverlay extends StatefulWidget {
   static const id = 'PauseOverlay';
   final PeepGame gameRef;
+
 
   const PauseOverlay({Key? key, required this.gameRef}) : super(key: key);
 
@@ -15,7 +18,7 @@ class PauseOverlay extends StatefulWidget {
 }
 
 class _PauseOverlayState extends State<PauseOverlay> {
-  //Variables and functions
+  var box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +60,30 @@ class _PauseOverlayState extends State<PauseOverlay> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                   ),
+                 Row(
+                   children: [
+                     IconButton(onPressed: () {
+                       int lives = box.read('lives') ?? 5;
+                       int score = box.read('score') ?? 0;
+                       gameRef.overlays.remove(PauseOverlay.id);
+                       gameRef.resetGame();
+                       gameRef.gameDataProvider.setLives(lives);
+                       gameRef.gameDataProvider.setPoints(score);
+                       //gameRef.overlays.add(GameStart.id);
+                       gameRef.resumeEngine();
+                       AudioManager.instance.resumeBgm();
+
+                     }, icon: const Icon(Icons.refresh_outlined,
+                       color: Colors.white,)),
+                     IconButton(onPressed: () {
+                       gameRef.overlays.remove(PauseOverlay.id);
+                       gameRef.overlays.add(SettingsOverlay.id);
+
+                     }, icon: const Icon(Icons.settings, color: Colors.white,))
+                   ],
+                 )
+
+
 
                 ],
               ),

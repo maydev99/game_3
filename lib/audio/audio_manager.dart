@@ -13,7 +13,7 @@ class AudioManager {
   Future<void> init(List<String> files) async {
     FlameAudio.bgm.initialize();
     await FlameAudio.audioCache.loadAll(files);
-    jumpSound = await AudioPool.create('boing.mp3', minPlayers: 3, maxPlayers: 4);
+    jumpSound = await AudioPool.create('jump_pop.mp3', minPlayers: 3, maxPlayers: 4);
     hitSound = await AudioPool.create('chicken_scream.mp3', minPlayers: 2, maxPlayers: 3);
   }
 
