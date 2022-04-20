@@ -120,7 +120,6 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     _hitTimer.start();
     if(isHit) {
       AudioManager.instance.playSfx('coin_sound.mp3', 0.5);
-
       gameRef.gameDataProvider.addBonusPoints(10);
     }
   }

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:provider/provider.dart';
 
+import '../monetize/ad_helper.dart';
+
+
+const int maxFailedLoadAttempts = 3;
 class LevelUpOverlay extends StatefulWidget {
   static const id = 'LevelUpOverlay';
   final PeepGame gameRef;
@@ -16,8 +22,75 @@ class LevelUpOverlay extends StatefulWidget {
 
 class _LevelUpOverlayState extends State<LevelUpOverlay> {
   var box = GetStorage();
+  int _interstitialLoadAttempts = 0;
+
+  InterstitialAd? _interstitialAd;
 
 
+
+  void _createInterstitialAd() {
+      InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          _interstitialAd = ad;
+          _interstitialLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          _interstitialAd = null;
+          _interstitialLoadAttempts += 1;
+          if(_interstitialLoadAttempts <= maxFailedLoadAttempts) {
+            _createInterstitialAd();
+          }
+
+        },
+      ),
+    );
+  }
+
+  void _showInterstitialAd() {
+
+
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdShowedFullScreenContent: (InterstitialAd ad) {
+          print('Ad Shown');
+          //AudioManager.instance.resumeBgm();
+        },
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          _createInterstitialAd();
+
+          AudioManager.instance.resumeBgm();
+          widget.gameRef.resumeEngine();
+          widget.gameRef.spawnEnemies();
+          widget.gameRef.spawnArtifacts();
+          widget.gameRef.startGamePlay();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+
+          _createInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _createInterstitialAd();
+
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd?.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     int level = box.read('level');
@@ -59,10 +132,8 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       gameRef.gameDataProvider.setLives(curLives + 5);
                       gameRef.gameDataProvider.addBonusPoints(25);
                       gameRef.startGamePlay();
-                      gameRef.resumeEngine();
-                      gameRef.spawnEnemies();
-                      gameRef.spawnArtifacts();
-                      gameRef.resumeEngine();
+                      _showInterstitialAd();
+
 
 
                     },

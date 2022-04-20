@@ -4,6 +4,7 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:layout/actors/artifact_manager.dart';
 import 'package:layout/actors/enemy_manager.dart';
 import 'package:layout/actors/mr_peep.dart';
@@ -11,10 +12,14 @@ import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/level/level_data.dart';
 import 'package:layout/overlays/game_over.dart';
+import 'package:layout/overlays/game_won_overlay.dart';
 import 'package:layout/overlays/level_up_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
 
+import '../monetize/ad_helper.dart';
 import '../overlays/hud.dart';
+
+
 
 class PeepGame extends FlameGame with TapDetector, HasCollidables {
   late EnemyManager enemyManager;
@@ -29,7 +34,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   int level = 0;
   int newLevelLives = 5;
   int bonusPoints = 25;
+  int maxPoints = 500;
   var levelData = LevelData();
+
+
 
   static const _audioAssets = [
     'funnysong.mp3',
@@ -69,13 +77,20 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       velocityMultiplierDelta: Vector2(1.9, 0),
     );
 
+
+
     mrPeeps = MrPeeps(images.fromCache('peeps4.png'));
     enemyManager = EnemyManager();
     artifactManager = ArtifactManager();
     startGamePlay();
 
+    AudioManager.instance.startBgm(levelData.data[myIndex].bgm);
+
     return super.onLoad();
   }
+
+
+
 
   @override
   void update(double dt) {
@@ -98,8 +113,16 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
     //This handles the level changes
     if (gameDataProvider.currentPoints >= levelData.data[index].endScore) {
-      endLevel(nextLevel: index + 2);
-      AudioManager.instance.playSfx('level_up.mp3', 1.0);
+      if(gameDataProvider.currentPoints >= maxPoints) {
+        pauseEngine();
+        AudioManager.instance.playSfx('level_up.mp3', 1.0);
+        overlays.add(GameWonOverlay.id);
+
+      } else {
+        endLevel(nextLevel: index + 2);
+        AudioManager.instance.playSfx('level_up.mp3', 1.0);
+      }
+
     }
 
     super.update(dt);
@@ -111,10 +134,11 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     AudioManager.instance.stopBgm();
     level = nextLevel;
     remove(mrPeeps);
-    enemyManager.removeAllEnemies();
     remove(enemyManager);
-    artifactManager.removeAllArtifacts();
     remove(artifactManager);
+    enemyManager.removeAllEnemies();
+    artifactManager.removeAllArtifacts();
+
     saveLevelState(level, gameDataProvider.currentLives + newLevelLives,
         gameDataProvider.currentPoints + bonusPoints);
     setParallax(index);
@@ -137,6 +161,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
         break;
       case AppLifecycleState.paused:
+        AudioManager.instance.pauseBgm();
         break;
       case AppLifecycleState.detached:
         break;
@@ -155,20 +180,27 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void resetGame() {
-    enemyManager.removeAllEnemies();
     enemyManager.removeFromParent();
+    artifactManager.removeFromParent();
+    enemyManager.removeAllEnemies();
+    artifactManager.removeAllArtifacts();
     add(enemyManager);
+    add(artifactManager);
   }
 
   void startGamePlay() {
-    AudioManager.instance.stopBgm();
+    //AudioManager.instance.stopBgm();
     loadLevelState();
     int index = savedLevel - 1;
     setParallax(index);
     add(parallaxComponent);
-    AudioManager.instance.startBgm(levelData.data[index].bgm);
+    AudioManager.instance.resumeBgm();
+    spawnEnemies();
+    spawnArtifacts();
+    //AudioManager.instance.startBgm(levelData.data[index].bgm);
     add(mrPeeps);
     mrPeeps.changePriorityWithoutResorting(1);
+
   }
 
   Future<void> setParallax(int myIndex) async {
@@ -192,9 +224,8 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   void spawnArtifacts() {
     add(artifactManager);
-    artifactManager.changePriorityWithoutResorting(2);
+    artifactManager.changePriorityWithoutResorting(3);
   }
-
 
   void saveLevelState(int level, int lives, int score) {
     box.write('level', level);
@@ -209,4 +240,8 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
     gameDataProvider.setPoints(savedScore);
     gameDataProvider.setLives(savedLives);
   }
+
+
+  
+
 }

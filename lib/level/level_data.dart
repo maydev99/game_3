@@ -62,7 +62,7 @@ class LevelData {
         bg3: 'ocean_2.png',
         bg4: 'grass.png',
         bgm: 'jazzy3.mp3',
-        endScore: 1000,
+        endScore: 500,
         enemies: [
           'Bird',
           'Dog',

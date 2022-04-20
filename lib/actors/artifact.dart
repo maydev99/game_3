@@ -6,9 +6,6 @@ import 'package:layout/game/peep_run.dart';
 
 import 'artifact_model.dart';
 
-
-
-
 class Artifact extends SpriteAnimationComponent
     with HasHitboxes, Collidable, HasGameRef<PeepGame> {
   late final ArtifactModel artifactModel;
@@ -43,7 +40,7 @@ class Artifact extends SpriteAnimationComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
-    if(other is MrPeeps) {
+    if (other is MrPeeps) {
       hit();
     }
     super.onCollision(intersectionPoints, other);

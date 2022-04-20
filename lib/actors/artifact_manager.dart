@@ -18,7 +18,7 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
   final Random _random = Random();
   var artifactList = ArtifactList();
   var levelData = LevelData();
-  final Timer _timer = Timer(20, repeat: true);
+  final Timer _timer = Timer(40, repeat: true);
   int level = 0;
   late int index;
   var box = GetStorage();
@@ -103,6 +103,7 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
   void removeAllArtifacts() {
     final artifacts = gameRef.children.whereType<Artifact>();
     for (var artifact in artifacts) {
+      _data.clear();
       artifact.removeFromParent();
     }
   }
