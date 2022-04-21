@@ -9,7 +9,7 @@ class LevelData {
         bg3: 'town.png',
         bg4: 'grass.png',
         bgm: 'rainy_run.mp3',
-        endScore: 100,
+        endScore: 5,
         enemies: [
           'Tort',
           'Bird',

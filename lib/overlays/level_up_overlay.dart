@@ -23,6 +23,7 @@ class LevelUpOverlay extends StatefulWidget {
 class _LevelUpOverlayState extends State<LevelUpOverlay> {
   var box = GetStorage();
   int _interstitialLoadAttempts = 0;
+  bool _ads = true;
 
   InterstitialAd? _interstitialAd;
 
@@ -81,9 +82,10 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
   @override
   void initState() {
     super.initState();
-    _createInterstitialAd();
-
-
+    _ads = box.read('ads') ?? true;
+    if(_ads) {
+      _createInterstitialAd();
+    }
   }
 
   @override
@@ -127,12 +129,21 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
 
                   MaterialButton(
                     onPressed: () {
+                      bool _ads = box.read('ads');
                       gameRef.overlays.remove(LevelUpOverlay.id);
                       int curLives = gameRef.gameDataProvider.currentLives;
                       gameRef.gameDataProvider.setLives(curLives + 5);
                       gameRef.gameDataProvider.addBonusPoints(25);
                       gameRef.startGamePlay();
-                      _showInterstitialAd();
+                      if(_ads) {
+                        _showInterstitialAd();
+                      } else {
+                        AudioManager.instance.resumeBgm();
+                        widget.gameRef.resumeEngine();
+                        widget.gameRef.spawnEnemies();
+                        widget.gameRef.spawnArtifacts();
+                      }
+
 
 
 
