@@ -75,7 +75,7 @@ class _GameOverState extends State<GameOver> {
                         gameRef.gameDataProvider.setLives(lives);
                         gameRef.gameDataProvider.setPoints(score);
                         gameRef.resumeEngine();
-                        AudioManager.instance.resumeBgm();
+
 
                       },
                       color: Colors.blue,

@@ -48,10 +48,18 @@ class _PauseOverlayState extends State<PauseOverlay> {
                   ),
                   MaterialButton(
                     onPressed: () {
+                      bool adsOn = box.read('ads');
                       gameRef.overlays.remove(PauseOverlay.id);
                       gameRef.overlays.add(Hud.id);
                       gameRef.resumeEngine();
-                      AudioManager.instance.resumeBgm();
+
+                      if(adsOn) {
+                        gameRef.loadNewLevelBGM();
+                        gameRef.spawnArtifacts();
+                        gameRef.spawnEnemies();
+                      } else {
+                        AudioManager.instance.resumeBgm();
+                      }
 
                     },
                     color: Colors.blue,
@@ -71,7 +79,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                        gameRef.gameDataProvider.setPoints(score);
                        //gameRef.overlays.add(GameStart.id);
                        gameRef.resumeEngine();
-                       AudioManager.instance.resumeBgm();
+
 
                      }, icon: const Icon(Icons.refresh_outlined,
                        color: Colors.white,)),

@@ -53,21 +53,23 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
   void _showInterstitialAd() {
 
 
+
     if (_interstitialAd != null) {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (InterstitialAd ad) {
           print('Ad Shown');
-          //AudioManager.instance.resumeBgm();
+
+
         },
         onAdDismissedFullScreenContent: (InterstitialAd ad) {
           ad.dispose();
-          _createInterstitialAd();
-
-          AudioManager.instance.resumeBgm();
+          //_createInterstitialAd();
           widget.gameRef.resumeEngine();
-          widget.gameRef.spawnEnemies();
-          widget.gameRef.spawnArtifacts();
+          //widget.gameRef.spawnEnemies();
+          //widget.gameRef.spawnArtifacts();
           widget.gameRef.startGamePlay();
+         // widget.gameRef.loadNewLevelBGM();
+
         },
         onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
           ad.dispose();
@@ -135,13 +137,16 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       gameRef.gameDataProvider.setLives(curLives + 5);
                       gameRef.gameDataProvider.addBonusPoints(25);
                       gameRef.startGamePlay();
+
+
                       if(_ads) {
                         _showInterstitialAd();
                       } else {
-                        AudioManager.instance.resumeBgm();
+
                         widget.gameRef.resumeEngine();
                         widget.gameRef.spawnEnemies();
                         widget.gameRef.spawnArtifacts();
+                        widget.gameRef.loadNewLevelBGM();
                       }
 
 

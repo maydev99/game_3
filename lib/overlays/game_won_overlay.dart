@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
+import 'package:layout/overlays/game_start_overlay.dart';
 import 'package:layout/overlays/hud.dart';
 import 'package:layout/overlays/settings_overlay.dart';
 import 'package:provider/provider.dart';
@@ -40,50 +41,33 @@ class _GameWonOverlayState extends State<GameWonOverlay> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   const Text(
-                    'Congratulations! You Won the Game',
+                    'Congratulations!\nYou Won the Game',
                     style: TextStyle(
                         fontSize: 60,
                         fontFamily: 'Righteous',
                         color: Colors.yellow),
+                    textAlign: TextAlign.center,
                   ),
                   MaterialButton(
                     onPressed: () {
-                      /*gameRef.overlays.remove(PauseOverlay.id);
-                      gameRef.overlays.add(Hud.id);
+                      gameRef.pauseEngine();
+                      gameRef.overlays.remove(GameWonOverlay.id);
+                      gameRef.overlays.add(GameStart.id);
+                      gameRef.gameDataProvider.setLives(5);
+                      gameRef.gameDataProvider.setPoints(0);
+                      gameRef.box.write('level', 1);
+                      gameRef.box.write('high', 0);
+                      gameRef.saveLevelState(1, 5, 0);
+                      gameRef.startGamePlay();
                       gameRef.resumeEngine();
-                      AudioManager.instance.resumeBgm();*/
 
                     },
                     color: Colors.blue,
                     textColor: Colors.white,
-                    child: const Text('Resume Game'),
+                    child: const Text('Reset Game'),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                   ),
-                  Row(
-                    children: [
-                     /* IconButton(onPressed: () {
-                        int lives = box.read('lives') ?? 5;
-                        int score = box.read('score') ?? 0;
-                        gameRef.overlays.remove(PauseOverlay.id);
-                        gameRef.resetGame();
-                        gameRef.gameDataProvider.setLives(lives);
-                        gameRef.gameDataProvider.setPoints(score);
-                        //gameRef.overlays.add(GameStart.id);
-                        gameRef.resumeEngine();
-                        AudioManager.instance.resumeBgm();
-
-                      }, icon: const Icon(Icons.refresh_outlined,
-                        color: Colors.white,)),
-                      IconButton(onPressed: () {
-                        gameRef.overlays.remove(PauseOverlay.id);
-                        gameRef.overlays.add(SettingsOverlay.id);
-
-                      }, icon: const Icon(Icons.settings, color: Colors.white,))*/
-                    ],
-                  )
-
-
 
                 ],
               ),

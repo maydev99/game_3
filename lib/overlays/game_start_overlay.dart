@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/hud.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,17 @@ class GameStart extends StatefulWidget {
 }
 
 class _GameStartState extends State<GameStart> {
-  //Variables and functions
+  var box = GetStorage();
+
+
+  @override
+  void initState() {
+    super.initState();
+    widget.gameRef.saveLevelState(1, 10, 98);
+    widget.gameRef.loadNewLevelBGM();
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +64,7 @@ class _GameStartState extends State<GameStart> {
                       gameRef.spawnEnemies();
                       gameRef.spawnArtifacts();
 
+
                     },
                     color: Colors.blue,
                     textColor: Colors.white,
@@ -60,13 +72,6 @@ class _GameStartState extends State<GameStart> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                   ),
-                  /*IconButton(onPressed: () {
-                    gameRef.overlays.remove(GameStart.id);
-                    gameRef.overlays.add(SettingsOverlay.id);
-
-                  }, icon: const Icon(Icons.settings,
-                    color: Colors.white,)
-                  ),*/
 
                 ],
               ),

@@ -32,7 +32,6 @@ class _HudState extends State<Hud> {
     var highScore = box.read('high');
     highScore ??= 0;
 
-
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
       child: Container(
@@ -42,7 +41,7 @@ class _HudState extends State<Hud> {
           children: [
             const ScoreDisplay(),
             pauseButton(gameRef),
-            musicButton(),
+            //musicButton(),
             const LivesDisplay(),
             Text(
               'High: $highScore',
@@ -54,25 +53,21 @@ class _HudState extends State<Hud> {
     );
   }
 
-  IconButton musicButton() {
+/*  IconButton musicButton() {
     return IconButton(
         onPressed: () {
-          setState(() {
-            if (hasMusicOn) {
-              if(!isPaused) {
-                hasMusicOn = false;
-                AudioManager.instance.pauseBgm();
-              }
+          if (hasMusicOn) {
+            AudioManager.instance.pauseBgm();
 
-            } else {
-
-              if(!isPaused) {
-                hasMusicOn = true;
-                AudioManager.instance.resumeBgm();
-              }
-
-            }
-          });
+            setState(() {
+              hasMusicOn = false;
+            });
+          } else {
+            AudioManager.instance.resumeBgm();
+            setState(() {
+              hasMusicOn = true;
+            });
+          }
         },
         icon: hasMusicOn
             ? const Icon(
@@ -83,21 +78,20 @@ class _HudState extends State<Hud> {
                 Icons.music_off,
                 color: Colors.red,
               ));
-  }
+  }*/
 
   TextButton pauseButton(PeepGame gameRef) {
     return TextButton(
         onPressed: () {
           if (!isPaused) {
+           AudioManager.instance.pauseBgm();
             gameRef.pauseEngine();
             gameRef.overlays.remove(Hud.id);
             gameRef.overlays.add(PauseOverlay.id);
-            AudioManager.instance.pauseBgm();
           } else {
             gameRef.resumeEngine();
-            if (musicOn) {
-              AudioManager.instance.resumeBgm();
-            }
+            AudioManager.instance.resumeBgm();
+
           }
 
           setState(() {
