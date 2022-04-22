@@ -21,7 +21,7 @@ class _GameStartState extends State<GameStart> {
   @override
   void initState() {
     super.initState();
-    widget.gameRef.saveLevelState(1, 10, 98);
+    //widget.gameRef.saveLevelState(1, 10, 98); //For testing setup (Level,Lives,Points)
     widget.gameRef.loadNewLevelBGM();
 
 

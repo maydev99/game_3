@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/game_start_overlay.dart';
-import 'package:layout/overlays/hud.dart';
-import 'package:layout/overlays/settings_overlay.dart';
 import 'package:provider/provider.dart';
 
 class GameWonOverlay extends StatefulWidget {
