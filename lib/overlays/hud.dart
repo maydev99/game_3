@@ -40,58 +40,36 @@ class _HudState extends State<Hud> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const ScoreDisplay(),
-            pauseButton(gameRef),
+
             //musicButton(),
             const LivesDisplay(),
             Text(
               'High: $highScore',
               style: const TextStyle(color: Colors.white, fontSize: 22),
-            )
+            ),
+            Text(
+              'Level : ${box.read('level')}',
+              style: const TextStyle(color: Colors.white, fontSize: 22),
+            ),
+
+            pauseButton(gameRef),
           ],
         ),
       ),
     );
   }
 
-/*  IconButton musicButton() {
-    return IconButton(
-        onPressed: () {
-          if (hasMusicOn) {
-            AudioManager.instance.pauseBgm();
-
-            setState(() {
-              hasMusicOn = false;
-            });
-          } else {
-            AudioManager.instance.resumeBgm();
-            setState(() {
-              hasMusicOn = true;
-            });
-          }
-        },
-        icon: hasMusicOn
-            ? const Icon(
-                Icons.music_note,
-                color: Colors.white,
-              )
-            : const Icon(
-                Icons.music_off,
-                color: Colors.red,
-              ));
-  }*/
-
   TextButton pauseButton(PeepGame gameRef) {
     return TextButton(
         onPressed: () {
           if (!isPaused) {
-           AudioManager.instance.pauseBgm();
+            AudioManager.instance.pauseBgm();
             gameRef.pauseEngine();
-            gameRef.overlays.remove(Hud.id);
+           // gameRef.overlays.remove(Hud.id);
             gameRef.overlays.add(PauseOverlay.id);
           } else {
             gameRef.resumeEngine();
             AudioManager.instance.resumeBgm();
-
           }
 
           setState(() {
