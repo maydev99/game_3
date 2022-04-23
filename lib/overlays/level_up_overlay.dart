@@ -97,7 +97,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
   }
   @override
   Widget build(BuildContext context) {
-    int level = box.read('level');
+    int level = box.read('level') ?? 1;
     var gameRef = widget.gameRef;
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
@@ -131,7 +131,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
 
                   MaterialButton(
                     onPressed: () {
-                      bool _ads = box.read('ads');
+                      bool _ads = box.read('ads') ?? true;
                       gameRef.overlays.remove(LevelUpOverlay.id);
                       int curLives = gameRef.gameDataProvider.currentLives;
                       gameRef.gameDataProvider.setLives(curLives + 5);

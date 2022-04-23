@@ -4,7 +4,6 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:layout/actors/artifact_manager.dart';
 import 'package:layout/actors/enemy_manager.dart';
 import 'package:layout/actors/mr_peep.dart';
@@ -16,7 +15,6 @@ import 'package:layout/overlays/game_won_overlay.dart';
 import 'package:layout/overlays/level_up_overlay.dart';
 import 'package:layout/overlays/pause_overlay.dart';
 
-import '../monetize/ad_helper.dart';
 import '../overlays/hud.dart';
 
 
@@ -102,7 +100,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
       overlays.remove(Hud.id);
       pauseEngine();
       var score = gameDataProvider.currentPoints;
-      var highScore = box.read('high');
+      var highScore = box.read('high') ?? 0;
       highScore ??= 0;
       if (score > highScore) {
         box.write('high', score);
@@ -248,7 +246,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void loadNewLevelBGM() {
-    int newLevel = box.read('level');
+    int newLevel = box.read('level') ?? 1;
     print('New Level: $newLevel');
     int levelIndex = newLevel - 1;
     print('New Level Index: $levelIndex');

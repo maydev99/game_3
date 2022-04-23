@@ -15,13 +15,13 @@ class GameStart extends StatefulWidget {
 }
 
 class _GameStartState extends State<GameStart> {
-  var box = GetStorage();
+  //var box = GetStorage();
 
 
   @override
   void initState() {
     super.initState();
-    widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
+   // widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
     widget.gameRef.loadNewLevelBGM();
 
 

@@ -29,7 +29,7 @@ class _HudState extends State<Hud> {
   @override
   Widget build(BuildContext context) {
     var gameRef = widget.gameRef;
-    var highScore = box.read('high');
+    var highScore = box.read('high') ?? 0;
     highScore ??= 0;
 
     return ChangeNotifierProvider.value(
@@ -48,7 +48,7 @@ class _HudState extends State<Hud> {
               style: const TextStyle(color: Colors.white, fontSize: 22),
             ),
             Text(
-              'Level : ${box.read('level')}',
+              'Level : ${box.read('level') ?? 1}',
               style: const TextStyle(color: Colors.white, fontSize: 22),
             ),
 

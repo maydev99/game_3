@@ -50,7 +50,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      bool adsOn = box.read('ads');
+                      bool adsOn = box.read('ads') ?? true;
                       gameRef.overlays.remove(PauseOverlay.id);
                       gameRef.overlays.add(Hud.id);
                       gameRef.resumeEngine();
