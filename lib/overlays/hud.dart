@@ -65,7 +65,7 @@ class _HudState extends State<Hud> {
           if (!isPaused) {
             AudioManager.instance.pauseBgm();
             gameRef.pauseEngine();
-           // gameRef.overlays.remove(Hud.id);
+            gameRef.overlays.remove(Hud.id);
             gameRef.overlays.add(PauseOverlay.id);
           } else {
             gameRef.resumeEngine();

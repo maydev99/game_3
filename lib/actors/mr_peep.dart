@@ -67,11 +67,14 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
+    //final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
     if ((other is Enemy) && (!isHit)) {
+
       hit();
     }
 
     if ((other is Artifact) && (!isHit)) {
+      other.removeFromParent();
       bonus();
     }
 
@@ -121,6 +124,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
     if(isHit) {
       AudioManager.instance.playSfx('coin_sound.mp3', 0.5);
       gameRef.gameDataProvider.addBonusPoints(10);
+      gameRef.artifactManager.removeAllArtifacts();
     }
   }
 }

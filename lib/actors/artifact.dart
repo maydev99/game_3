@@ -9,6 +9,7 @@ import 'artifact_model.dart';
 class Artifact extends SpriteAnimationComponent
     with HasHitboxes, Collidable, HasGameRef<PeepGame> {
   late final ArtifactModel artifactModel;
+  final shape = HitboxRectangle(relation: Vector2.all(0.8));
   GameDataProvider gameDataProvider = GameDataProvider();
 
   /*static final _animationMap = {
@@ -31,7 +32,6 @@ class Artifact extends SpriteAnimationComponent
 
   @override
   void onMount() {
-    final shape = HitboxRectangle(relation: Vector2.all(0.8));
     addHitbox(shape);
     size *= 0.3;
 
@@ -41,7 +41,8 @@ class Artifact extends SpriteAnimationComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
     if (other is MrPeeps) {
-      hit();
+    removeHitbox(shape);
+    //  hit();
     }
     super.onCollision(intersectionPoints, other);
   }
@@ -59,7 +60,8 @@ class Artifact extends SpriteAnimationComponent
     super.update(dt);
   }
 
-  void hit() {
-    removeFromParent();
-  }
+  /*void hit() {
+    removeHitbox(shape);
+
+  }*/
 }
