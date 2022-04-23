@@ -138,7 +138,6 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       gameRef.gameDataProvider.addBonusPoints(25);
                       gameRef.startGamePlay();
 
-
                       if(_ads) {
                         _showInterstitialAd();
                       } else {

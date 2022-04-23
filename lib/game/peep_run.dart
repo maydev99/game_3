@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -20,6 +22,7 @@ import '../overlays/hud.dart';
 
 
 class PeepGame extends FlameGame with TapDetector, HasCollidables {
+
   late EnemyManager enemyManager;
   late ArtifactManager artifactManager;
   late GameDataProvider gameDataProvider;
@@ -50,6 +53,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   @override
   Future<void>? onLoad() async {
+    camera.viewport = FixedResolutionViewport(Vector2(801,393));
     gameDataProvider = GameDataProvider();
     await images.load('tort.png');
     await images.load('peeps4.png');
