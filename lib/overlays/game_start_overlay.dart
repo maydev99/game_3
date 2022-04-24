@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/hud.dart';
 import 'package:provider/provider.dart';
@@ -14,13 +15,18 @@ class GameStart extends StatefulWidget {
 }
 
 class _GameStartState extends State<GameStart> {
-  //var box = GetStorage();
+  var box = GetStorage();
 
 
   @override
   void initState() {
     super.initState();
-    widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
+    //widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
+    var ads = box.read('ads');
+    if(ads == null) {
+      box.write('ads', true);
+    }
+
     widget.gameRef.loadNewLevelBGM();
 
 
