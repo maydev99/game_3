@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -53,7 +51,12 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
 
   @override
   Future<void>? onLoad() async {
-    camera.viewport = FixedResolutionViewport(Vector2(801,393));
+    double screenX = size.x;
+    double screenY = size.y;
+    double ratio = screenY / screenX;
+    if(ratio >= 0.50) {
+      camera.viewport = FixedResolutionViewport(Vector2(801,393));
+    }
     gameDataProvider = GameDataProvider();
     await images.load('tort.png');
     await images.load('peeps4.png');

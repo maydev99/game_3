@@ -1,6 +1,4 @@
-import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/overlays/hud.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +20,7 @@ class _GameStartState extends State<GameStart> {
   @override
   void initState() {
     super.initState();
-   // widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
+    widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
     widget.gameRef.loadNewLevelBGM();
 
 
@@ -31,7 +29,7 @@ class _GameStartState extends State<GameStart> {
   @override
   Widget build(BuildContext context) {
     var gameRef = widget.gameRef;
-    print('SIZE: ${gameRef.size.x} X ${gameRef.size.y}');
+    //print('SIZE: ${gameRef.size.x} X ${gameRef.size.y}');
     return ChangeNotifierProvider.value(
       value: gameRef.gameDataProvider,
       child: Center(

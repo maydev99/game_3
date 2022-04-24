@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +31,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
   void _createInterstitialAd() {
       InterstitialAd.load(
       adUnitId: AdHelper.interstitialAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           _interstitialAd = ad;
@@ -57,7 +56,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
     if (_interstitialAd != null) {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (InterstitialAd ad) {
-          print('Ad Shown');
+
 
 
         },
