@@ -21,7 +21,7 @@ class _GameStartState extends State<GameStart> {
   @override
   void initState() {
     super.initState();
-    //widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
+    widget.gameRef.saveLevelState(1, 10, 95); //For testing setup (Level,Lives,Points)
     var ads = box.read('ads');
     if(ads == null) {
       box.write('ads', true);

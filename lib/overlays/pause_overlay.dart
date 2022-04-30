@@ -52,6 +52,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                       gameRef.overlays.remove(PauseOverlay.id);
                       gameRef.overlays.add(Hud.id);
                       gameRef.resumeEngine();
+                      gameRef.addMrPeeps();
 
                       if(adsOn) {
                         gameRef.loadNewLevelBGM();
@@ -77,7 +78,6 @@ class _PauseOverlayState extends State<PauseOverlay> {
                        gameRef.resetGame();
                        gameRef.gameDataProvider.setLives(lives);
                        gameRef.gameDataProvider.setPoints(score);
-                       //gameRef.overlays.add(GameStart.id);
                        gameRef.resumeEngine();
 
 

@@ -17,7 +17,6 @@ class SettingsOverlay extends StatefulWidget {
 }
 
 class _SettingsOverlayState extends State<SettingsOverlay> {
-
   var box = GetStorage();
   bool _ads = true;
 
@@ -69,25 +68,21 @@ class _SettingsOverlayState extends State<SettingsOverlay> {
                   ),
                   Row(
                     children: [
-                      const Text('Ads',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white
-                      ),),
+                      const Text(
+                        'Ads',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
                       CupertinoSwitch(
                         value: _ads,
                         onChanged: (bool value) {
                           setState(() {
                             _ads = value;
                             box.write('ads', _ads);
-
                           });
                         },
-
                       ),
                     ],
                   ),
-
                   MaterialButton(
                     onPressed: () {
                       gameRef.overlays.remove(SettingsOverlay.id);

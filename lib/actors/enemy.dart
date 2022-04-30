@@ -1,6 +1,5 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/geometry.dart';
 import 'package:layout/actors/enemy_data.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';

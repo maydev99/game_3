@@ -1,7 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
-import 'package:flame/geometry.dart';
 import 'package:flutter/services.dart';
 import 'package:layout/actors/bonus_coin.dart';
 import 'package:layout/actors/enemy.dart';
@@ -9,7 +8,7 @@ import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
 import 'package:layout/game/peep_run.dart';
 
-import 'artifact.dart';
+
 
 enum PeepAnimationStates {
   run,

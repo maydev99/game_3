@@ -73,6 +73,7 @@ class _GameOverState extends State<GameOver> {
                         gameRef.resetGame();
                         gameRef.gameDataProvider.setLives(lives);
                         gameRef.gameDataProvider.setPoints(score);
+                        gameRef.spawnArtifacts();
                         gameRef.resumeEngine();
 
 

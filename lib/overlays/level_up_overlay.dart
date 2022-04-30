@@ -57,17 +57,12 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (InterstitialAd ad) {
 
-
-
         },
         onAdDismissedFullScreenContent: (InterstitialAd ad) {
           ad.dispose();
-          //_createInterstitialAd();
           widget.gameRef.resumeEngine();
-          //widget.gameRef.spawnEnemies();
-          //widget.gameRef.spawnArtifacts();
           widget.gameRef.startGamePlay();
-         // widget.gameRef.loadNewLevelBGM();
+
 
         },
         onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
@@ -142,10 +137,11 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       } else {
 
                         widget.gameRef.resumeEngine();
-                        widget.gameRef.addMrPeeps();
                         widget.gameRef.spawnEnemies();
                         widget.gameRef.spawnArtifacts();
+                        widget.gameRef.addMrPeeps();
                         widget.gameRef.loadNewLevelBGM();
+
                       }
 
 

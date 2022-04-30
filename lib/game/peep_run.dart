@@ -196,12 +196,8 @@ class PeepGame extends FlameGame with TapDetector, HasCollisionDetection {
   }
 
   void resetGame() {
-    //enemyManager.removeFromParent();
-    //artifactManager.removeFromParent();
-    //enemyManager.removeAllEnemies();
-    //artifactManager.removeAllArtifacts();
     add(enemyManager);
-   // add(artifactManager);
+
   }
 
   void startGamePlay() {
@@ -210,12 +206,6 @@ class PeepGame extends FlameGame with TapDetector, HasCollisionDetection {
     int index = savedLevel - 1;
     setParallax(index);
     add(parallaxComponent);
-
-  //  spawnEnemies();
-   // spawnArtifacts();
-
-    //add(mrPeeps);
-    //mrPeeps.changePriorityWithoutResorting(1);
 
   }
 
@@ -264,11 +254,8 @@ class PeepGame extends FlameGame with TapDetector, HasCollisionDetection {
 
   void loadNewLevelBGM() {
     int newLevel = box.read('level') ?? 1;
-    print('New Level: $newLevel');
     int levelIndex = newLevel - 1;
-    print('New Level Index: $levelIndex');
     AudioManager.instance.startBgm(levelData.data[levelIndex].bgm);
-    print('New Level Music: ${levelData.data[levelIndex].bgm}');
   }
 
 }
