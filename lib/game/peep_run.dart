@@ -55,9 +55,9 @@ class PeepGame extends FlameGame with TapDetector, HasCollisionDetection {
     double screenY = size.y;
     double ratio = screenY / screenX;
     print('RATIO" $ratio');
-    if(ratio >= 0.55) {
+    /*if(ratio >= 0.55) {
       camera.viewport = FixedResolutionViewport(Vector2(736,414));
-    }
+    }*/
     gameDataProvider = GameDataProvider();
     await images.load('tort.png');
     await images.load('peeps4.png');
@@ -201,7 +201,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollisionDetection {
     //enemyManager.removeAllEnemies();
     //artifactManager.removeAllArtifacts();
     add(enemyManager);
-    add(artifactManager);
+   // add(artifactManager);
   }
 
   void startGamePlay() {
@@ -244,7 +244,7 @@ class PeepGame extends FlameGame with TapDetector, HasCollisionDetection {
   }
 
   void spawnArtifacts() {
-    add(artifactManager);
+   add(artifactManager);
     artifactManager.changePriorityWithoutResorting(3);
   }
 

@@ -15,8 +15,8 @@ class LevelData {
           'Bird',
         ],
         artifacts: [
-          'Coin_Ten',
-          'Magic_Butterfly'
+          /*'Coin_Ten',
+          'Magic_Butterfly'*/
         ]),
     Level(
         levelId: 2,
@@ -28,7 +28,7 @@ class LevelData {
         endScore: 200,
         enemies: ['Tort', 'Bird', 'Dog'],
         artifacts: [
-          'Coin_Ten'
+          //'Coin_Ten'
         ]),
     Level(
         levelId: 3,
@@ -40,8 +40,8 @@ class LevelData {
         endScore: 300,
         enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort'],
         artifacts: [
-          'Coin_Ten',
-          'Magic_Butterfly'
+          /*'Coin_Ten',
+          'Magic_Butterfly'*/
         ]),
     Level(
         levelId: 4,
@@ -53,7 +53,7 @@ class LevelData {
         endScore: 400,
         enemies: ['Tort', 'Bird', 'Dog', 'Rocket_Tort'],
         artifacts: [
-          'Coin_Ten'
+          //'Coin_Ten'
         ]),
     Level(
         levelId: 5,
@@ -69,7 +69,7 @@ class LevelData {
           'Rocket_Tort',
         ],
         artifacts: [
-          'Coin_Ten'
+          //'Coin_Ten'
         ]) //Change endScore after adding new level
   ];
 }

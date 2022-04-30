@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:layout/actors/artifact.dart';
+import 'package:layout/actors/bonus_coin.dart';
 import 'package:layout/game/peep_run.dart';
 import 'package:layout/level/level_data.dart';
 
@@ -29,28 +30,8 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
   }
 
   void spawnRandomArtifact() {
-    levelArtifacts.clear();
-    artifactDataList.clear();
-
-
-    var randomIndex = _random.nextInt(_data.length);
-
-    //print('ARTDATA: ${_data.elementAt(randomIndex).imageFileName.toString()}');
-
-    final artifactData = _data.elementAt(randomIndex);
-    print('ARTDATA ${artifactData.altitude}');
-    final myArtifact = Artifact(artifactData);
-
-    myArtifact.anchor = Anchor.bottomLeft;
-    myArtifact.position = Vector2(
-        gameRef.size.x + 32,
-        gameRef.size.y - 1);
-
-    myArtifact.position.y = gameRef.size.y - 200;
-
-
-    myArtifact.size = artifactData.textureSize;
-    add(myArtifact);
+    final myBonusCoin = BonusCoin(gameRef.images.fromCache('coin_ten.png'));
+    add(myBonusCoin);
   }
 
   @override
@@ -101,7 +82,7 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
   }
 
   void removeAllArtifacts() {
-    final artifacts = gameRef.children.whereType<Artifact>();
+    final artifacts = gameRef.children.whereType<BonusCoin>();
     for (var artifact in artifacts) {
       _data.clear();
       artifact.removeFromParent();

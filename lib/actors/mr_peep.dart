@@ -3,6 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
 import 'package:flutter/services.dart';
+import 'package:layout/actors/bonus_coin.dart';
 import 'package:layout/actors/enemy.dart';
 import 'package:layout/audio/audio_manager.dart';
 import 'package:layout/game/game_data_provider.dart';
@@ -69,12 +70,13 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
 
     if ((other is Enemy) && (!isHit)) {
-
       hit();
     }
 
-    if ((other is Artifact) && (!isHit)) {
-      other.removeFromParent();
+    if ((other is BonusCoin) && (!isHit)) {
+      Future.delayed(const Duration(milliseconds: 600)).then((_){
+        other.removeFromParent();
+      });
       bonus();
     }
     super.onCollision(intersectionPoints, other);
