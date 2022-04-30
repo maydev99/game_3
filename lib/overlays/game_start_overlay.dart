@@ -67,6 +67,7 @@ class _GameStartState extends State<GameStart> {
                       gameRef.overlays.add(Hud.id);
                       gameRef.loadLevelState();
                       gameRef.startGamePlay();
+                      gameRef.addMrPeeps();
                       gameRef.spawnEnemies();
                       gameRef.spawnArtifacts();
 

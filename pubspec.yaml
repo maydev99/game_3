@@ -9,7 +9,7 @@ environment:
 dependencies:
   http: any
   logger: any
-  flame: any
+  flame: ^1.1.1
 
   flutter:
     sdk: flutter

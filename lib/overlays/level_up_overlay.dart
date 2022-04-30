@@ -142,6 +142,7 @@ class _LevelUpOverlayState extends State<LevelUpOverlay> {
                       } else {
 
                         widget.gameRef.resumeEngine();
+                        widget.gameRef.addMrPeeps();
                         widget.gameRef.spawnEnemies();
                         widget.gameRef.spawnArtifacts();
                         widget.gameRef.loadNewLevelBGM();

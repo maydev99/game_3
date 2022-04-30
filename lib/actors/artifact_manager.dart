@@ -55,7 +55,7 @@ class ArtifactManager extends Component with HasGameRef<PeepGame> {
 
   @override
   void onMount() {
-    shouldRemove = false;
+    //shouldRemove = false;
     level = box.read('level') ?? 1;
     index = level - 1;
 

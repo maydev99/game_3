@@ -1,3 +1,4 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/geometry.dart';
@@ -15,7 +16,7 @@ enum PeepAnimationStates {
 }
 
 class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
-    with HasHitboxes, Collidable, HasGameRef<PeepGame> {
+    with CollisionCallbacks, HasGameRef<PeepGame> {
   static Vector2 gravity = Vector2(0, 600);
   Vector2 velocity = Vector2.zero();
   bool isJumping = false;
@@ -54,8 +55,7 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
 
   @override
   void onMount() {
-    final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
-    addHitbox(shape);
+    add(RectangleHitbox.relative(Vector2.all(1.0), parentSize: Vector2.all(90)));
 
     _hitTimer.onTick = () {
       current = PeepAnimationStates.run;
@@ -66,8 +66,8 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
   }
 
   @override
-  void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
-    //final shape = HitboxRectangle(relation: Vector2(0.5, 0.7));
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+
     if ((other is Enemy) && (!isHit)) {
 
       hit();
@@ -77,9 +77,9 @@ class MrPeeps extends SpriteAnimationGroupComponent<PeepAnimationStates>
       other.removeFromParent();
       bonus();
     }
-
     super.onCollision(intersectionPoints, other);
   }
+
 
   @override
   void update(double dt) {

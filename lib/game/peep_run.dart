@@ -19,7 +19,7 @@ import '../overlays/hud.dart';
 
 
 
-class PeepGame extends FlameGame with TapDetector, HasCollidables {
+class PeepGame extends FlameGame with TapDetector, HasCollisionDetection {
 
   late EnemyManager enemyManager;
   late ArtifactManager artifactManager;
@@ -114,6 +114,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
         box.write('high', score);
       }
       overlays.add(GameOver.id);
+      enemyManager.removeAllEnemies();
+      remove(enemyManager);
+      artifactManager.removeAllArtifacts();
+      remove(artifactManager);
     }
 
     //This handles the level changes
@@ -192,10 +196,10 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   }
 
   void resetGame() {
-    enemyManager.removeFromParent();
-    artifactManager.removeFromParent();
-    enemyManager.removeAllEnemies();
-    artifactManager.removeAllArtifacts();
+    //enemyManager.removeFromParent();
+    //artifactManager.removeFromParent();
+    //enemyManager.removeAllEnemies();
+    //artifactManager.removeAllArtifacts();
     add(enemyManager);
     add(artifactManager);
   }
@@ -210,9 +214,14 @@ class PeepGame extends FlameGame with TapDetector, HasCollidables {
   //  spawnEnemies();
    // spawnArtifacts();
 
+    //add(mrPeeps);
+    //mrPeeps.changePriorityWithoutResorting(1);
+
+  }
+
+  void addMrPeeps() {
     add(mrPeeps);
     mrPeeps.changePriorityWithoutResorting(1);
-
   }
 
   Future<void> setParallax(int myIndex) async {

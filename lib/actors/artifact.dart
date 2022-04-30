@@ -1,3 +1,4 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:layout/actors/mr_peep.dart';
@@ -7,9 +8,9 @@ import 'package:layout/game/peep_run.dart';
 import 'artifact_model.dart';
 
 class Artifact extends SpriteAnimationComponent
-    with HasHitboxes, Collidable, HasGameRef<PeepGame> {
+    with CollisionCallbacks, HasGameRef<PeepGame> {
   late final ArtifactModel artifactModel;
-  final shape = HitboxRectangle(relation: Vector2.all(0.8));
+  //final shape = HitboxRectangle(relation: Vector2.all(0.8));
   GameDataProvider gameDataProvider = GameDataProvider();
 
   /*static final _animationMap = {
@@ -32,20 +33,29 @@ class Artifact extends SpriteAnimationComponent
 
   @override
   void onMount() {
-    addHitbox(shape);
+    //addHitbox(shape);
+    add(RectangleHitbox.relative(Vector2.all(1.0), parentSize: Vector2.all(50)));
     size *= 0.3;
 
     super.onMount();
   }
 
   @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if(other is MrPeeps) {
+
+    }
+    super.onCollision(intersectionPoints, other);
+  }
+
+  /*@override
   void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
     if (other is MrPeeps) {
     removeHitbox(shape);
     //  hit();
     }
     super.onCollision(intersectionPoints, other);
-  }
+  }*/
 
   @override
   void update(double dt) {
